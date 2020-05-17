@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>父子组件传值</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- count上 加 ：代表传值的值是数字型，否则则为 字符型 -->
+       <counter :count="0" @chanage="counterChanage"></counter>
+       <counter :count="1" @chanage="counterChanage"></counter>
+       <div>{{total}}</div>
+    </div>
+</body>
+
+<script>
+    let counter = {
+        // props: ['count'],
+        props: {
+            count : {
+                type: [String, Number],
+                required: true, //是否必传
+                default: 'default value', //如果默认未传，没传值得时候，则显示默认值
+                 // 自定义验证函数
+                validator (value) {
+                    return (value.length > 5)
+                }
+            }
+        },
+        // data必须是函数，子组件不能更改父组件的值，只能重新定义
+        data() {
+            return {
+                number: this.count
+            }
+        },
+        template: '<div @click="handleClick">{{count}}</div>',
+        methods: {
+            handleClick() {
+                this.number ++ ;
+                this.$emit("chanage", 1);
+            }
+        },
+    } 
+    let vm = new Vue({
+        el: "#app",
+        data() {
+            return {
+                name: '阿黄',
+                total: 0
+            }
+        },
+        components: {
+            counter: counter
+        },
+        methods: {
+            counterChanage(stop) {
+                this.total += stop;
+            }
+        }
+    })
+</script>
+
+</html>

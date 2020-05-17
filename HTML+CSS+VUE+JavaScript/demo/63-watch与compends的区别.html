@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="js/vue.js"></script>
+</head>
+<body>
+
+  <div id="app">
+    <p>{{ haiZeiTuan_Name }}</p>
+    <p>{{ suoLong }}</p>
+    <p>{{ naMei }}</p>
+    <p>{{ xiangJiShi }}</p>
+  </div>
+
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data() {
+        return {
+          haiZeiTuan_Name: '草帽海贼团',
+          suoLong: '草帽海贼团索隆',
+          naMei: '草帽海贼团娜美',
+          xiangJiShi: '草帽海贼团香吉士'
+        }
+      },
+      watch: {
+        haiZeiTuan_Name: function(newName){
+          this.suoLong = newName + '索隆'
+          this.naMei = newName + '娜美'
+          this.xiangJiShi = newName + '香吉士'
+          console.log(this.suoLong)
+          console.log(this.naMei)
+          console.log(this.xiangJiShi)
+        }
+      },
+      computed: {
+        
+      },
+    })
+
+    vm.haiZeiTuan_Name = '狐狸'
+  </script>
+  
+</body>
+</html>

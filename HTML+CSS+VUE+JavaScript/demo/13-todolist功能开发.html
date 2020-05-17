@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>todolist功能开发</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    
+    <div id="app">
+        <!-- <div> -->
+            <input v-model='inputvalue'/>
+            <button @click='handleSubmint'>提交</button>
+        <!-- </div> -->
+
+        <!-- item : list值，index为下标 -->
+        <ul>
+            <li v-for='(item,index) of list' :key='index'>{{item}}</li>
+        </ul>
+       
+    </div>
+
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                inputvalue:'', //设置默认值
+                list:[]
+            },
+            methods: {
+                handleSubmint:function(){
+                    this.list.push(this.inputvalue);
+                    this.inputvalue = '';
+                }
+            },
+        })
+    </script>
+
+</body>
+</html>

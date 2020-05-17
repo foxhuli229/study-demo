@@ -1,0 +1,28 @@
+﻿vue-cli2安装过程
+注：安装vue-cli之前需要先安装node.js
+1、进入vue.js-》教程-》安装
+2、找到 命令行工具cli
+3、输入命令：（cmd）
+    npm install --global vue-cli  //全局安装
+4、选择创建文件的目录，然后输入
+    vue init webpack 项目名
+    弹出提示语信息：
+    project name 请再次输入你创建的项目名
+    project description 项目介绍
+    author 作者名称
+    vue build standalone
+    Intall vue-router? 输入NO
+    User ESLint preset Standard
+    Set up unit tests 输入NO
+    Setup e2e tests with Nightwatch ? 输入NO
+    Should we run 'npm' install for you after the project has been created? 
+    请在提示信息后，选择 npm 然后等待加载
+5、进入新创建的项目路径，输入 npm run dev
+6、如果正确的话，则提示信息 为 
+    DONE Compiled successfully in XXXms
+    I your application is running here: http://localhost:端口号
+    然后复制 http://localhost:端口号 在浏览器中运行，若运行成功为 vue的首页，证明创建项目成功。
+
+运行项目：
+	npm run start
+    

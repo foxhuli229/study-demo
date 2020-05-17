@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>5-4 vue中js动画与velocity.js的结合.html</title>
+    <script src="js/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.5.0/velocity.min.js"></script>
+   
+</head>
+<body>
+    
+    <div id="app">
+        <!-- 
+            name: 动画名，默认为 v, 
+            动画 淡出执行的事件
+            @before-leave=""
+            @leave=""
+            @after-leave=""
+            动画 淡入执行的事件
+            @before-enter="handleBeforeEnter"
+            @enter="handleEnter"
+            @after-enter="handleAfterEnter"
+        -->
+        <transition 
+            name="faed"
+            @before-enter="handleBeforeEnter"
+            @enter="handleEnter"
+            @after-enter="handleAfterEnter"
+            @before-leave=""
+            @leave=""
+            @after-leave=""
+            >
+            <div v-show="isShow">
+                <h1>你好</h1>
+            </div>
+        </transition>
+        <button @click="handleBtnClick">change</button>
+    </div>
+
+    <script>
+
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    isShow: true
+                }
+            },
+            methods: {
+                handleBtnClick () {
+                    this.isShow = !this.isShow
+                },
+                // 在淡入动画之前
+                handleBeforeEnter (el) {
+                    // el.style.color = "#e91e63"
+                    el.style.opacity = 0
+                },
+                // 在淡入动画执行时
+                handleEnter (el, done) {
+                    // 延迟
+                    setTimeout(() => {
+                        el.style.color = '#ff9800'
+                    }, 2000)
+                    setTimeout(() => {
+                        done()
+                    }, 4000)
+                },
+                // 在淡入动画完成后
+                handleAfterEnter(el) {
+                    el.style.color = '#000'
+                }
+            },
+        })
+    </script>
+
+</body>
+</html>

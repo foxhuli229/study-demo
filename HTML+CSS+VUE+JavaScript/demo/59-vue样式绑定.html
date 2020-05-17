@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/vue.js"></script>
+    <style>
+        .activated {
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div 
+            @click="handleClick"
+            :class="[activated]"
+            :style="[styleobj, {fontSize: '20px'}]"
+            >
+            hello world</div>
+    </div>
+</body>
+
+<script>
+    let vm = new Vue({
+        el: "#app",
+        data() {
+            return {
+                name: '阿黄',
+                isActivated: false,
+                activated: "",
+                styleobj: {
+                    color: "black",
+                }
+            }
+        },
+        methods: {
+            // class 的对象绑定 :class="{activated: isActivated}"
+            handleClick() {
+                // this.isActivated = !this.isActivated
+                // this.activated = this.activated === "activated" ? "" : "activated"
+                this.styleobj.color = this.styleobj.color === "black" ? "red" : "black"
+            }
+        },  
+    })
+</script>
+
+</html>

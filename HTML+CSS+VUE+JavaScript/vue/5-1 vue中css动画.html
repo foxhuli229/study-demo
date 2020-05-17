@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue中css动画</title>
+    <script src="js/vue.js"></script>
+    <style>
+        @keyframes font-bg {
+            0% {
+                transform: scale(0)
+            }
+            50% {
+                transform: scale(1.5)
+            }
+            100% {
+                transform: scale(1)
+            }
+        }
+        /* 显示-开始的时候 */
+        /* .faed-enter {
+            opacity: 0;
+        } */
+        /* 显示-运行中 */
+        .faed-enter-active {
+            /* transition: opacity 1s; */
+            transform-origin: left center;
+            animation: font-bg 1s;
+        }
+        /* 隐藏 */
+        /* .faed-leave-to {
+            opacity: 0;
+        } */
+        .faed-leave-active {
+            /* transition: opacity 1s; */
+            transform-origin: left center;
+            animation: font-bg 1s reverse;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="app">
+        <!-- name: 动画名，默认为 v, 
+        自定义动画的class名: enter-active-class="class名" 、 leave-active-class="class名" -->
+        <transition name="faed">
+            <div v-show="isShow">你好</div>
+        </transition>
+        <button @click="handleBtnClick">change</button>
+    </div>
+
+    <script>
+
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    isShow: true
+                }
+            },
+            methods: {
+                handleBtnClick () {
+                    this.isShow = !this.isShow
+                }
+            },
+        })
+    </script>
+
+</body>
+</html>

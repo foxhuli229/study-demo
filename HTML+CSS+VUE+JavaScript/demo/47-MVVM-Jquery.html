@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MVVM模式-jQuery</title>
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+
+</head>
+<body>
+
+    <div>
+        <input  value="" type="text"  placeholder=""/>
+        <button id="btn">提交</button>
+        <ul id="list">
+           
+        </ul>
+    </div>
+    
+</body>
+<script>
+    // M:模型层 V：视图层 P：控制层
+    function Page() {
+
+    }
+    $.extend(Page.prototype, {
+        init: function() {
+            this.bindEvents()
+        },
+        bindEvents: function() {
+            var btn = $("#btn");
+            btn.on("click", $.proxy(this.handleBtnClick, this))
+        },
+        handleBtnClick: function() {
+            var inputELem = $("input");
+            var inputValue = inputELem.val();
+            var ulElem = $("#list");
+            ulElem.append("<li>"+ inputValue + "</li>")
+            inputELem.val("");
+        }
+    })
+    var page = new Page();
+    page.init()
+</script>
+</html>
