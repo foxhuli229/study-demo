@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue条件渲染</title>
+    <script src="js/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div v-if="show === 'a'"> this.is A</div>
+        <div v-else-if= " show === 'b'">
+            this is B
+        </div>
+        <div v-else>bye 阿黄</div>
+        <div v-show="isshow">
+                {{name}}
+        </div>
+        <div v-if="isshow">
+            用户名: <input key="username"/>
+        </div>
+        <div v-else>
+            邮箱名:<input key="mail">
+        </div>
+    </div>
+</body>
+
+<script>
+    let vm = new Vue({
+        el: "#app",
+        data() {
+            return {
+                name: 'Hello world',
+                show: 'a',
+                isshow: false
+            }
+        },
+    })
+</script>
+
+</html>

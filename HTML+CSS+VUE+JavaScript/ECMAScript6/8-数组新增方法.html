@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>数据新增方法</title>
+
+</head>
+
+<body>
+
+  <ul id="list">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+  </ul>
+
+
+</body>
+
+<script>
+  /* 
+    数据新增方法
+    Array.from()：把一类的数组转换成类数组
+    类数组：有下标，有length
+    返回值： 转换之后的数组
+   */
+  let lis = document.querySelectorAll("#list li");
+  console.log("Array.isArray(变量名)： 检查该变量是否是数组:"+ Array.isArray(lis))
+  /* 转换类数组 */
+  // lis = Array.from(lis); 
+  let arr = [];
+
+  /* this:指向，其申明作用域 window, 因为在 箭头函数中，箭头函数没有 this的 */
+  // lis = Array.from(lis, (item, index)=>{
+  //   console.log(item, index, this)
+  //   return index;
+  // }, arr); 
+
+  /* this:指向 document, 因为在 function函数中 */
+  // lis = Array.from(lis, function(item, index){
+  //   console.log(item, index, this)
+  //   return index;
+  // }, arr); 
+
+  lis = [...lis]
+  console.log(lis)
+
+
+  /*
+    Array.of():将值 转为 数组
+  */
+  let rs2 = Array.of(1,2, "阿黄")
+  console.log(rs2)
+
+  /* 
+    Array.isArray(变量名)： 检查该变量是否是 数组
+    返回值：boolean值
+  */
+  console.log("Array.isArray(变量名)： 检查该变量是否是数组:"+ Array.isArray(rs2))
+  console.log("Array.isArray(变量名)： 检查该变量是否是数组:"+ Array.isArray(lis))
+
+
+
+  console.log("时间戳 Date.now()：" + Date.now())
+  console.log("时间戳new Date().getTime()：" + new Date().getTime())
+</script>
+
+</html>

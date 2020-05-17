@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="js/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <ul>
+      <li v-for="(n,index) in even(numbers, index)" 
+          :key="index"
+          :content="index">{{ n }}</li>
+    </ul>
+
+    <ul>
+      <template v-for='(item, index) in items'>
+        <li>{{ items.msg }}</li>
+        <li class="divider" role="presentation"></li>
+      </template>
+    </ul>
+  </div>
+
+  <script>
+    var vim = new Vue({
+      el: '#app',
+      data() {
+        return {
+          numbers: [1, 2, 3, 4, 5],
+          items: {
+              name: '狐狸',
+              msg: '一只等爱的狐狸'
+          }
+        }
+      },
+      methods: {
+        even: function (numbers, index) {
+          return numbers.filter(function (numbers, index) {
+            return index % 2 === 0
+          })
+        }
+      },
+    })
+  </script>
+
+</body>
+
+</html>

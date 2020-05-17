@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>css制作空心的上下左右的箭头</title>
+  <style type="text/css">
+  
+
+    .arrow-box {
+      width: 30px;
+      height: 30px;
+      margin: 20px auto;
+      position: relative;
+    }
+
+    /*下箭头*/
+    .bottom {
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 2;
+      /*兼容ie8-*/
+    }
+
+    .bottom-arrow1,
+    .bottom-arrow2 {
+      width: 0;
+      height: 0;
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 5;
+      /*兼容ie8-*/
+      border-bottom: 10px transparent dashed;
+      border-left: 10px transparent dashed;
+      border-right: 10px transparent dashed;
+      border-top: 10px white solid;
+      overflow: hidden;
+    }
+
+    .bottom-arrow1 {
+      top: 1px;
+      /*重要*/
+      border-top: 10px red solid;
+    }
+
+    .bottom-arrow2 {
+      border-top: 10px white solid;
+    }
+  </style>
+
+<body>
+
+  
+    <div class="arrow-bottom arrow-box">
+      <b class="bottom"><i class="bottom-arrow1"></i><i class="bottom-arrow2"></i></b>
+    </div>
+ 
+</body>
+
+</html>

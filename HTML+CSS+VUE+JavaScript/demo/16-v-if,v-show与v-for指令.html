@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-if,v-show与v-for指令</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        <!-- v-if: 当点击 toggle按钮时，移除 /新增 v-if标签内容 -->
+        <!-- <div v-if='show'>hello world</div> -->
+
+        <!-- v-show: 当点击 toggle按钮时，给标签内容新增 display 样式 -->
+        <div v-show='show'>hello world2</div>
+
+        <!-- 绑定一个方法 -->
+        <button @click="handleClick">toggle</button>
+
+        <ul>
+            <!-- v-for 循环 -->
+            <li v-for='(item,index) of list' :key='index'>{{item}}</li>
+        </ul>
+    </div>
+
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                show:true, //是否显示
+                list:[1,2,3],
+            },
+            // 函数
+            methods:{
+                handleClick:function(){
+                    this.show = !this.show;
+                }
+            }
+        })
+    </script>
+    
+</body>
+</html>

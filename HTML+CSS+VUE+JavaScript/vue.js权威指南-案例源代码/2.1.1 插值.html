@@ -1,0 +1,35 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-05-08 12:36:00
+ * @LastEditTime: 2020-05-08 12:54:41
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \vue\vue.js权威指南-案例源代码\2.1.1 插值.html
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>{{msg}}</p>
+        <p>{{*msg1}}</p>
+    </div>
+
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                msg: 'hello world',
+                msg1: "<span style='color: red'>你好</span>"
+            }
+        })
+    </script>
+    
+</body>
+</html>

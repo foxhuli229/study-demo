@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div @click="handleClick">
+                {{message}}
+        </div>
+        <item></item>
+    </div>
+</body>
+<script>
+    Vue.component('item', {
+        props:[],
+        template: '<div>hello item</div>'
+    })
+
+    let vm = new Vue({
+        el: '#app',
+        data() {
+            return {
+                message: 'hello world'
+            }
+        },
+        methods: {
+            handleClick: function(){
+                alert("1121")
+            }
+        },
+    })
+</script>
+
+</html>

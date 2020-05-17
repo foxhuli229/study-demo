@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+
+    <style>
+        .mytable td,
+        .mytable {
+            font-size: 12px;
+            color: red;
+            border: 1px solid #000;
+            text-align: center;
+            border-collapse: collapse;
+        }
+    </style>
+    <script>
+        function up() {
+            $.each($("table input"), function () {
+                var onthis = $(this).parent().parent();
+                var getUp = onthis.prev();
+
+                if ($(getUp).has("input").size() == 0) {
+                    alert("顶级元素不能上移");
+                    return;
+                }
+                $(onthis).after(getUp);
+            });
+        }
+
+
+        function down() {
+            $.each($("table input"), function () {
+                var onthis = $(this).parent().parent();
+                var getdown = onthis.next();
+                $(getdown).after(onthis);
+            });
+        }
+    </script>
+
+</head>
+
+<body>
+    <div>
+        <input type="button" οnclick="up();" value=" 上移 ">
+        <input type="button" οnclick="down();" value=" 下移 ">
+    </div>
+    <div>
+        <table width="400px" height="200" class="mytable" cellpadding="5" cellspacing="0">
+            <tr>
+                <td>序号</td>
+                <td>名字</td>
+                <td>性别</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" id="c1" />1</td>
+                <td>小一</td>
+                <td>男</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" id="c2" />2</td>
+                <td>小二</td>
+                <td>女</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" id="c3" />3</td>
+                <td>小三</td>
+                <td>女</td>
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>

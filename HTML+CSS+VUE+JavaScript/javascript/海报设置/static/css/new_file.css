@@ -1,0 +1,159 @@
+@charset "utf-8";
+.drag_box {
+	width: 900px;
+	height: 540px;
+	box-sizing: border-box;
+	padding: 20px;
+	background: #F1F1F1;
+	position: relative;
+	margin: 50px;
+	display: flex;
+	align-items: flex-start;
+}
+
+.drag_box .drag_box_arrow {
+	width: 0;
+	height: 0;
+	position: absolute;
+	left: 140px;
+	z-index: 1;
+	top: -50px;
+	border: 30px solid transparent;
+	border-bottom-color: #F1F1F1;
+}
+
+.drag_box_in {
+	background: #fff;
+	width: 275px;
+	height: 495px;
+	position: relative;
+}
+
+.drag_userhead {
+	width: 35px;
+	height: 35px;
+	border-radius: 50%;
+	z-index: 1;
+	position: absolute;
+	left: 118px;
+	top: 36px;
+	cursor: pointer;
+}
+
+.drag_username {
+	font-size: 14px;
+	color: #111111;
+	z-index: 2;
+	position: absolute;
+	left: 108px;
+	top: 83px;
+	cursor: pointer;
+}
+
+.drag_erweima {
+	width: 56px;
+	height: 56px;
+	z-index: 2;
+	position: absolute;
+	left: 70px;
+	top: 393px;
+	cursor: pointer;
+}
+
+.drag_box_in_r {
+	flex: 1;
+	padding: 0 30px;
+}
+
+.drag_box_in_r_list li {
+	margin-bottom: 40px;
+	display: flex;
+	align-items: flex-start;
+}
+
+.drag_box_in_r_list li .drag_box_in_r_inl {
+	width: 120px;
+	font-size: 18px;
+	color: #111;
+}
+
+.drag_box_in_r_list li .drag_box_in_r_inr {
+	flex: 1;
+}
+
+.drag_box_in_r_btn {
+	display: inline-block;
+	vertical-align: top;
+	cursor: pointer;
+	width: 124px;
+	height: 48px;
+	background: rgba(255, 255, 255, 1);
+	border: 1px solid rgba(236, 236, 236, 1);
+	border-radius: 4px;
+	font-size: 18px;
+	color: #111;
+	text-align: center;
+	line-height: 48px;
+	transition: all 0.3s ease;
+	margin-bottom: 10px;
+}
+.drag_box_in_r_btn:hover{
+	background: #2A75ED;
+	color: #fff;
+}
+.drag_box_in_r_btn:active{
+	background: #145bcd;
+}
+.drag_box_in_r_tips{
+	width: 375px;
+	color: #696969;
+	font-size: 16px;
+	line-height:24px;
+}
+.haibao_tit{
+	height:48px;
+	line-height: 48px;
+}
+.drag_box_in_r_radio{
+	display: inline-block;
+	vertical-align: top;
+}
+.drag_box_in_r_radio .drag_box_in_r_radio_a{
+	font-size: 16px;
+	margin-right: 20px;
+	color: #333;
+}
+.drag_box_in_r_radio .drag_box_in_r_radio_a:hover{
+	color: #2A75ED;
+}
+.drag_box_in_r_radio .drag_redio_action{
+	color: #2A75ED;
+}
+.drag_box_in_r_radio .drag_box_in_r_radio_a>i{
+	margin-right: 5px;
+	font-size: 14px;
+}
+.nicheng_name{
+	color: #111;
+	margin-right: 20px;
+	font-size: 18px;
+}
+.drag_box_in_r_inr_list{
+	margin-bottom: 20px;
+}
+.black_block{
+	display: inline-block;
+	vertical-align: top;
+	width: 20px;
+	height: 20px;
+	background: #000;
+	margin-right: 5px;
+}
+.white_block{
+	display: inline-block;
+	vertical-align: top;
+	width: 20px;
+	height: 20px;
+	background: #fff;
+	margin-right: 5px;
+}

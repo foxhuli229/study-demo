@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>拖拽</title>
+	<link rel="stylesheet" href="static/css/reset.css" />
+	<link rel="stylesheet" href="static/css/new_file.css" />
+	<link rel="stylesheet" href="http://at.alicdn.com/t/font_990287_vk8gsfeg35.css" />
+	<script type="text/javascript" src="static/js/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="Plug/udraggable/jquery.event.ue.js"></script>
+	<script type="text/javascript" src="Plug/udraggable/jquery.udraggable.js"></script>
+	<!--http://www.jq22.com/jquery-info3990  插件api-->
+</head>
+
+<body>
+	<!--拖拽-->
+	<div class="drag_box">
+		<i class="drag_box_arrow"></i>
+		<div class="drag_box_in">
+			<img id="drag_userhead" class="drag_userhead" src="Plug/layer-v3.1.1/theme/default/icon.png" />
+			<p id="drag_username" class="drag_username">用户昵称</p>
+			<img id="drag_erweima" class="drag_erweima" src="Plug/layer-v3.1.1/theme/default/icon-ext.png" />
+		</div>
+		<div class="drag_box_in_r">
+			<ul class="drag_box_in_r_list">
+				<li>
+					<div class="drag_box_in_r_inl">
+						<div class="haibao_tit">自定义海报</div>
+					</div>
+					<div class="drag_box_in_r_inr">
+						<a class="drag_box_in_r_btn">点击上传</a>
+						<p class="drag_box_in_r_tips">建议尺寸750x1334px或9:16，JPG、PNG格式，图片小于1M</p>
+					</div>
+				</li>
+				<li>
+					<div class="drag_box_in_r_inl">
+						用户头像昵称
+					</div>
+					<div class="drag_box_in_r_inr">
+						<div class="drag_box_in_r_inr_list">
+							<div class="drag_box_in_r_radio">
+								<a class="drag_box_in_r_radio_a drag_redio_action" href="javascript:head_show()"><i
+										class="iconfont icon-radiobox-marked"></i>显示</a>
+								<a class="drag_box_in_r_radio_a" href="javascript:head_hide()"><i
+										class="iconfont icon-radiobox-blank"></i>不显示</a>
+							</div>
+						</div>
+						<div class="drag_box_in_r_inr_list">
+							<span class="nicheng_name">昵称颜色</span>
+							<div class="drag_box_in_r_radio">
+								<a class="drag_box_in_r_radio_a drag_redio_action" href="javascript:drag_username_black()"><i
+										class="iconfont icon-radiobox-marked"></i><b class="black_block"></b>黑色</a>
+								<a class="drag_box_in_r_radio_a" href="javascript:drag_username_white()"><i
+										class="iconfont icon-radiobox-blank"></i><b class="white_block"></b>白色</a>
+							</div>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="drag_box_in_r_inl">
+						<div class="haibao_tit">自定义海报</div>
+					</div>
+					<div class="drag_box_in_r_inr">
+						<a href="javascript:default_position()" class="drag_box_in_r_btn">恢复默认位置</a>
+						<p class="drag_box_in_r_tips">可拖拽头像、昵称、二维码自定义位置</p>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(function () {
+			$('#drag_userhead,#drag_username,#drag_erweima').udraggable({
+				containment: 'parent'
+			});
+			$(document).on("click", ".drag_box_in_r_radio .drag_box_in_r_radio_a", function () {
+				$(this).addClass("drag_redio_action");
+				$(this).children("i").removeClass("icon-radiobox-blank").addClass("icon-radiobox-marked");
+				$(this).siblings(".drag_box_in_r_radio_a").removeClass("drag_redio_action");
+				$(this).siblings(".drag_box_in_r_radio_a").children("i").removeClass("icon-radiobox-marked").addClass("icon-radiobox-blank");
+			})
+		})
+		/*头像显示*/
+		function head_show() {
+			$("#drag_userhead").show();
+		}
+		/*头像隐藏*/
+		function head_hide() {
+			$("#drag_userhead").hide();
+		}
+		/*昵称白色*/
+		function drag_username_white() {
+			$("#drag_username").css("color", "#fff")
+		}
+		/*昵称黑色*/
+		function drag_username_black() {
+			$("#drag_username").css("color", "#111111")
+		}
+		/*恢复默认位置*/
+		function default_position() {
+			$("#drag_userhead").css({ "left": "118px", "top": "36px" })
+			$("#drag_username").css({ "left": "108px", "top": "83px" })
+			$("#drag_erweima").css({ "left": "70px", "top": "393px" })
+		}
+	</script>
+</body>
+
+</html>

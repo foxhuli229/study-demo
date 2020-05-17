@@ -1,0 +1,78 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-04-28 09:35:22
+ * @LastEditTime: 2020-05-12 13:00:52
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \vue\vue\3.2 vue实例生命周期.html
+ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue实例生命周期函数</title>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+
+<body>
+    <div id="app">
+        {{msessage}}
+    </div>
+</body>
+
+<script>
+    //生命周期函数就是vue实例在某一个时间点会自动执行的函数
+    let vm = new Vue({
+        el: '#app',
+        data() {
+            return {
+                msessage: "阿黄"
+            }
+        },
+        methods: {
+            getlist() {
+                console.log("列表");
+                
+            }
+        },
+        // 在实例初始化之后
+        beforeCreate() {
+            console.log("beforeCreate")
+            console.log(this.$data);
+        },
+        // 在实例创建完成后被立即调用
+        created() {
+            console.log("created")
+            console.log(this.$data);
+            console.log(this.getlist());
+            console.log(this);
+            
+            
+
+        },
+        // 在挂载开始之前被调用
+        beforeMount() {
+            console.log(this.$el)
+            console.log("beforeMount")
+        },
+        // 并挂载到实例上去之后调用该钩子
+        mounted() {
+            console.log(this.$el)
+            console.log("mounted")
+        },
+        // 实例销毁之前调用
+        beforeDestroy() {
+            console.log("beforeDestroy")
+        },
+        // Vue 实例销毁后调用
+        destroyed() {
+            console.log("destroyed")
+        },
+    })
+</script>
+
+</html>

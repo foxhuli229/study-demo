@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="C:\zyh\bkw-project\bkwmanage-web\WebRoot\js\laydate\theme\default\laydate.css">
+    <link rel="stylesheet"
+        href="C:\zyh\bkw-project\bkwmanage-web\WebRoot\js\extension_common_js\Plug\font-awesome-4.7.0\css\font-awesome.min.css">
+    <link rel="stylesheet" href="C:\zyh\bkw-project\bkwmanage-web\WebRoot\extension_css\extensionMain.css">
+    <script src="C:\zyh\bkw-project\bkwmanage-web\WebRoot\js\jquery-1.11.3.min.js"></script>
+    <script src="C:\zyh\bkw-project\bkwmanage-web\WebRoot\js\laydate\laydate-week1.js"></script>
+    <script src="C:\zyh\bkw-project\bkwmanage-web\WebRoot\js\common-tools\common-format.js"></script>
+    <script src="C:\zyh\bkw-project\bkwmanage-web\WebRoot\js\extension_common_js\extension_main.js"></script>
+    <title>Document</title>
+</head>
+
+<style>
+    .layui-grey {
+        background: #E6F7FF;
+    }
+
+    .layui-this {
+        background: #48A5FF;
+        border-radius: 2px;
+    }
+
+    .layui-laydate {
+        box-shadow: 0 0 0px rgba(0, 0, 0, .12);
+    }
+
+    [class^=layui-laydate] tr:hover {
+        background: #E6F7FF;
+    }
+
+    [class^=layui-laydate] tr:hover>td:first-of-type,
+    [class^=layui-laydate] tr:hover>td:last-of-type {
+        background: #48A5FF;
+        color: #fff;
+    }
+
+    .laydate-theme-molv .layui-laydate-content {
+        border: none;
+    }
+
+    .layui-laydate-header {
+        background: #fff !important;
+    }
+
+    .laydate-theme-molv .layui-laydate-header i,
+    .laydate-theme-molv .layui-laydate-header span {
+        color: #666;
+    }
+
+    .drpick {
+        position: absolute;
+        height: 310px;
+        border: 1px solid #ccc;
+    }
+
+    .drpick>div {
+        width: 275px;
+        height: 40px;
+        display: inline-block;
+    }
+
+    .laydate-bottom-style {
+        width: 100% !important;
+        border-top: 1px solid #ccc;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        line-height: 40px;
+    }
+
+    .laydate-bottom-style>button {
+        float: right;
+        margin: 8px;
+    }
+
+    .confirm-btn {
+        width: 65px;
+        height: 24px;
+        background: rgba(72, 165, 255, 1);
+        border-radius: 4px;
+        border: none;
+        color: #fff;
+    }
+
+    .cancel-btn {
+        width: 65px;
+        height: 24px;
+        background: rgba(255, 255, 255, 1);
+        border-radius: 4px;
+        border: 1px solid rgba(217, 217, 217, 1);
+    }
+
+    #date-value {
+        width: 280px;
+        height: 30px;
+        /* border:1px solid #ccc; */
+        float: left;
+        margin: 4px;
+        font-size: 14px;
+        line-height: 30px;
+        padding: 0 5px;
+        color: #666;
+    }
+
+    #pick-time {
+        padding: 0 10px;
+        width: 245px;
+    }
+
+    l.line {
+        display: block;
+        width: 100%;
+        border-top: 1px solid #ccc;
+        position: absolute;
+        top: 45px;
+        z-index: 10;
+    }
+</style>
+<!--  id="pick-time"  -->
+
+<body>
+
+    <div>
+        <div class="time_choice" id="pick-time"></div>
+        <div class="drpick" style="display:none;">
+            <div id="laydate1"></div>
+            <div id="laydate2"></div>
+            <div class="laydate-bottom-style">
+                <div id="date-value" value=""><span value="">-</span>-<span value="">-</span></div>
+                <button type="button" class="confirm-btn">确定</button>
+                <button type="button" class="cancel-btn">取消</button>
+            </div>
+            <l class="line"></l>
+        </div>
+    </div>
+
+
+    <script>
+        var startDate="",endDate=""
+
+        /**
+         * 整合时间插件
+         *  依赖 
+            extensionMain.css
+            font-awesome-4.7.0\css\font-awesome.min.css
+            common-format.js
+            laydate-week1.js
+            extension_main.js
+            jquery-1.11.3.min.js
+         */
+        var datepick = {
+            ui1: "", //第一个时间div元素
+            ui2: "", //第二个时间div元素
+            time1: [],//时间1
+            time2: [],//时间2
+            init: function () {
+                var ele1 = this.renderDate("#laydate1")
+                var ele2 = this.renderDate("#laydate2")
+                this.ui1 = ele1
+                this.ui2 = ele2
+
+                this.bindWeek(this.ui1)
+                this.bindWeek(this.ui2)
+                this.bindListener();
+            },
+            renderDate: function (element) {
+                var _this = this;
+                laydate.render({
+                    elem: element
+                    , position: 'static'
+                    , btns: []
+                    , theme: "#58AFFF"
+                    , showBottom: false
+                    , ready: function () {
+                        var dates = $(".layui-this").removeClass("layui-this")
+                    }
+                    , change: function (value, date, endDate) {
+                        var dates = _this.ui1.find(".layui-this")
+                        if (dates.length == 1)
+                            dates.removeClass("layui-this")
+
+                        dates = _this.ui2.find(".layui-this")
+                        if (dates.length == 1)
+                            dates.removeClass("layui-this")
+
+                        var time1 = $("#date-value span").eq(0).attr("value").split(",")
+                        if (time1.length > 1) {
+                            _this.ui1.find("td[lay-ymd=" + time1[0] + "]").addClass("layui-this")
+                            _this.ui1.find("td[lay-ymd=" + time1[1] + "]").addClass("layui-this")
+                            _this.ui1.find("td[lay-ymd=" + time1[1] + "]").siblings().addClass("layui-grey")
+                        }
+
+
+                        var time2 = $("#date-value span").eq(1).attr("value").split(",")
+                        if (time2.length > 1) {
+                            _this.ui2.find("td[lay-ymd=" + time2[0] + "]").addClass("layui-this")
+                            _this.ui2.find("td[lay-ymd=" + time2[1] + "]").addClass("layui-this")
+                            _this.ui2.find("td[lay-ymd=" + time2[1] + "]").siblings().addClass("layui-grey")
+                        }
+                    }
+                });
+                var key = $(element).attr("lay-key")
+                key = "#layui-laydate" + key
+                return $(key)
+            }
+            , bindWeek: function ($obj) {
+                var _this = this;
+                $obj.on("click", "tr>td", function () {
+                    // 1 选中样式处理
+                    $obj.find("td").removeClass("layui-this").removeClass("layui-grey")
+                    $(this).siblings().first().addClass("layui-this")
+                    $(this).siblings().last().addClass("layui-this")
+                    $(this).parent().children().addClass("layui-grey")
+
+                    // 2 时间处理获取开始时间+结束时间+格式化周
+                    var start = $(this).siblings().first().attr("lay-ymd")
+                    var end = $(this).siblings().last().attr("lay-ymd")
+                    var week = new Date(end).format("yyyy年第ww周")
+                    console.log("选中周数为: " + week)
+
+                    // 3 div存放周数
+                    if (_this.ui1 === $obj) {
+                        _this.time1[0] = start;
+                        _this.time1[1] = end;
+                        $("#date-value span").eq(0).text(week).attr("value", _this.time1)
+                    } else {
+                        _this.time2[0] = start;
+                        _this.time2[1] = end;
+                        $("#date-value span").eq(1).text(week).attr("value", _this.time2)
+                    }
+                })
+
+            }
+            , bindListener: function () {
+
+                var _this = this;
+
+                $(".time_choice").on("click", function (e) {
+                    e.stopPropagation()
+                    $(this).addClass("kicon_up")
+                    $(this).css("border", "1px solid #48A5FF")
+                    $(".drpick").show()
+                })
+                $(document).on("click", function () {
+                    $(".drpick").hide()
+                })
+                $(document).on("click", ".drpick", function (e) {
+                    e.stopPropagation()
+                })
+                $(document).on("click", ".drpick .cancel-btn,.drpick .confirm-btn", function (e) {
+                    $(".drpick").hide()
+                    $(".kicon_up").removeClass("kicon_up").css("border", "1px solid #ccc")
+                })
+                $(document).on("click", ".drpick .confirm-btn", function (e) {
+                    $("#pick-time").text($("#date-value").text())
+                    if (_this.time1.length < 2 || _this.time2.length < 2) {
+                        layer.msg("请选择具体时间", { icon: 0 })
+                        return;
+                    }
+                    //取出最小时间和最大时间,存入div中
+                    var arr = _this.time1.concat(_this.time2)
+                    arr.sort(function(a,b){
+                        return new Date(a).getTime()-new Date(b).getTime();
+                    })
+                    
+                    var min = arr[0]
+                    var max = arr.pop()
+
+                    console.log(min+" - "+max)
+
+                    window.startDate = min
+                    window.endDate = max
+                    if (typeof getData != 'undefined') getData()
+                })
+            }
+        }
+
+        datepick.init()
+
+    </script>
+</body>
+
+</html>

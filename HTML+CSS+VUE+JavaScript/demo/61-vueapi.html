@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="js/vue.js"></script>
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="app">
+      <input type="text" v-model='message'>
+      <!--
+      v-once : 只渲染元素和组件一次, 这可以用优化更新性能
+      执行一次性插值指令,当改变数据时,插值处的内容不会更新
+      -->
+      <h2 v-once>{{message}}</h2>
+  </div>
+
+  <script>
+  export default {
+    
+  }
+  </script>
+
+  <script>
+    var vim = new Vue({
+      el: '#app',
+      created() {
+        console.log("vue的创建")
+      },
+      data() {
+        return {
+          message: '小狐狸'
+        }
+      },
+      components: {
+        message: function(){
+          return message = this.message
+        }
+      }
+    })
+  </script>
+  
+</body>
+</html>

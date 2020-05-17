@@ -1,0 +1,59 @@
+<!-- 
+    链接：https://juejin.im/post/5d5df391e51d453b1e478ad0
+来源：掘金
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>将canvas图片转为下载的图片的url</title>
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            const notice = new Notification("前端宇宙情报局", {
+                body: "这20个不常用的Web API真的有用吗?，别问，问就是有用🈶",
+                icon: "我的掘金头像",
+                data: {
+                    url: "https://www.baidu.com"
+                }
+            });
+
+
+            // 点击回调
+            notice.onclick = () => {
+                window.open(notice.data.url); // 当用户点击通知时，在浏览器打开百度网站
+            }
+
+            Notification.requestPermission(prem => {
+                prem == "granted" // 同意
+                // prem == "denied" // 拒绝
+            })
+
+            let permission = Notification.permission;
+
+            if (permission == "granted") {
+                // 已同意，开始发送通知
+                alert("已同意，开始发送通知");
+            } else if (permission == "denied") {
+                // 不同意，发不了咯
+                alert("同意，发不了咯");
+            } else {
+                alert("其他状态，可以重新发送授权提示");
+                // 其他状态，可以重新发送授权提示
+                Notification.requestPermission();
+            }
+
+        })
+    </script>
+
+</head>
+
+<body>
+
+
+</body>
+
+</html>

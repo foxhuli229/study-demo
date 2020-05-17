@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script type="text/javascript" src="js/vue.js"></script>
+</head>
+
+<body>
+  <div id="div">
+    <input v-model="changeFirstNameFn">
+    <input v-model="changeSecondNameFn">
+    <br />
+    全名：<input id="full" v-model="fullName">
+  </div>
+
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script>
+      var a = new Vue({
+        el: "#div",
+        data: {
+          firstName: "",
+          lastName: "",
+          fullName: ""
+        },
+        computed: {
+          changeFirstNameFn: {
+            get: function () {      // get 函数，返回绑定的“姓” 的输入框的value 值
+              return this.firstName
+            },
+            set: function (newVal) { //set函数是当数据发生变化时调用.监听到 “姓”的变化，执行set 函数
+              this.firstName = newVal
+              this.fullName = newVal + " " + this.lastName
+              
+            }
+          },
+          changeSecondNameFn: {
+            get: function () {
+              return this.lastName
+            },
+            set: function (newVal) {   //set 函数是当数据发生变化时调用
+              this.lastName = newVal
+              this.fullName = this.firstName + " " + newVal
+            }
+          }
+        }
+      })
+
+    </script>
+
+</html>

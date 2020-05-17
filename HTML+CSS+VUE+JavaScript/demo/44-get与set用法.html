@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>get与set的用法</title>
+  <script src="js/vue.js"></script>
+</head>
+<body>
+
+  <div id="app">
+    <p>第一个：{{ firstName }}</p>
+    <p>第二个：{{ lastName }}</p>
+    <p>funllName: {{ funllName }}</p>
+  </div>
+
+  <script>
+    var vm = new Vue({
+        el: '#app',
+        data() {
+          return {
+            firstName: 'Foo',
+            lastName: 'Bar'
+          }
+        },
+        watch: {
+          
+        },
+        computed: {
+          funllName: {
+            //回调函数 当需要读取当前属性值是执行，根据相关数据计算并返回当前属性的值
+            get(){ //读取
+              return this.firstName + ' ' + this.lastName;
+            },
+            //监视当前属性值变化，当属性值发生变化时执行，更新相关属性的数据值
+            set(val){
+                console.log("val"+val);
+                const names = val.split(' ');
+                console.log("names:"+names);
+                this.firstName = names[0];
+                this.lastName = names[1];
+            }
+          }
+        },
+    })
+  </script>
+  
+</body>
+</html>

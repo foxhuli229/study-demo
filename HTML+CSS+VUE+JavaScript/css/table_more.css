@@ -1,0 +1,126 @@
+/* 多级统一表格样式 */
+.table_level {
+  position: relative;
+  width: 100%;
+  height: 493px;
+  overflow: auto;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-size: 12px;
+}
+/* 表头样式 */
+.table_level .thead {
+  display: flex;
+  box-sizing: border-box;
+  z-index: 100;
+}
+.table_level .thead > li {
+  flex: 1;
+  list-style: none;
+  line-height: 40px;
+  height: 40px;
+  min-width: 100px;
+  box-sizing: border-box;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  background: rgba(248, 248, 248, 1);
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family:PingFangSC;
+  font-weight: 500;
+  color: rgba(33, 33, 33, 1);
+}
+
+.table_level .thead > li:first-of-type {
+  border-right: 1px solid #ccc;
+  min-width: 400px;
+  background: rgba(248, 248, 248, 1);
+  padding-left: 40px;
+  text-align: left;
+}
+
+/* 表格样式 */
+.table_level ul {
+  margin: 0;
+  padding: 0;
+}
+
+.table_level ul > div {
+  display: flex;
+  height: 40px;
+  box-sizing: border-box;
+  position: relative;
+}
+.table_level ul > div > li {
+  flex: 1;
+  list-style: none;
+  line-height: 40px;
+  height: 40px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+  min-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size:12px;
+  font-family:PingFangSC;
+  font-weight:400;
+  color:rgba(33,33,33,1);
+}
+.table_level ul > ul > div > li {
+  background: #f8f8f8;
+}
+.table_level ul > ul > ul > div > li {
+  background: #f4f9ff;
+}
+.table_level > ul > div > li:first-of-type {
+  background: #fff;
+}
+.table_level ul > div > li:first-of-type {
+  padding-left: 20px;
+  border-right: 1px solid #ccc;
+  flex: 5;
+  min-width: 400px;
+  z-index: 1;
+  text-align: left;
+}
+.table_level > ul > ul > div > li:first-child::after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  left: 60px;
+  top: -5px;
+  transform: rotate(45deg);
+  z-index: 2;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #ccc #f8f8f8 #f8f8f8 #ccc;
+  border-image: initial;
+  background: #f8f8f8;
+}
+
+.table_level .tbody {
+  max-height: 300px;
+}
+.table_level li > i {
+  font-size: 17px;
+  color: #b7b7b7;
+  vertical-align: top;
+  display: inline-block;
+  margin-top: -1px;
+}
+.table_level ul > div > li:first-of-type > span {
+  margin-left: 20px;
+}
+.table_level ul > ul > div > li:first-of-type {
+  padding-left: 20px;
+  overflow: visible !important;
+}
+.table_level ul > ul > ul > div > li:first-of-type {
+  padding-left: 60px;
+}
