@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>box-shadow</title>
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            margin: 40px auto;
+            padding-left: 3%;
+            box-sizing: border-box;
+            /* border: 2px solid; */
+        }
+
+        .box1 {
+            /* x偏移量, y偏移量， color */
+            box-shadow: 60px 16px teal;
+        }
+
+        .box2 {
+            /* x偏移量,y偏移量 , 阴影模糊直径, color */
+            box-shadow: -10px 5px 10px black;
+        }
+
+        .box3 {
+            /* x偏移量,y偏移量 , 阴影模糊半径, 阴影扩散半径 color */
+            box-shadow: 90px 5px 10px 20px red;
+        }
+
+        .box4 {
+            /* inset：内阴影， x偏移量,y偏移量 , 阴影模糊半径, color :rgba 此时的color取值在 0-255 */
+            box-shadow: inset 10px 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .box5 {
+            /* inset：内阴影， x偏移量,y偏移量 ,  color */
+            box-shadow: inset 5em 1em gold;
+        }
+
+        .box6 {
+            /* 任意值，多个采用 逗号进行 分割 */
+            box-shadow: 3px 3px red, -1em 0 0.4em olive;
+        }
+
+        .box7 {
+            border: none;
+            box-shadow:
+                inset 0 -3em 3em rgba(0, 0, 0, 0.1),
+                0 0 0 2px rgb(255, 255, 255),
+                0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+        }
+
+        .box8 {
+            margin-top: 300px;
+            border: none;
+            background-color: #fff;
+            box-shadow: 120px -80px 40px 20px #22ffff;
+        }
+        .box9 {
+            box-shadow: inset 0px 0px 5px 1px #cccccc;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="box box1">box-shadow: 60px 16px teal;</div>
+    <div class="box box2">box-shadow: -10px 5px 10px black;</div>
+    <div class="box box3">box-shadow: 90px 5px 10px 20px red;</div>
+    <div class="box box4">box-shadow: inset 10px 5px 10px rgba(0, 0, 0, 0.2);</div>
+    <div class="box box5">box-shadow: inset 5em 1em gold;</div>
+    <div class="box box6">任意值，多个采用 逗号进行 分割 <br />box-shadow: 3px 3px red, -1em 0 0.4em olive;</div>
+    <div class="box box7">box-shadow:
+        inset 0 -3em 3em rgba(0,0,0,0.1),
+        0 0 0 2px rgb(255,255,255),
+        0.3em 0.3em 1em rgba(0,0,0,0.3);</div>
+    <div class="box box8">box-shadow: 120px -80px 40px 20px #22ffff;</div>
+    <div class="box box9">上内阴影 box-shadow: inset 0px 0px 5px 1px #cccccc;</div>
+
+</body>
+
+</html>
