@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-05-26 10:03:35
- * @LastEditTime: 2020-05-26 16:01:59
+ * @LastEditTime: 2020-05-27 14:35:01
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vue-baidumap\src\views\Map.vue
@@ -9,11 +9,21 @@
 <template>
   <div>
     <div class="title">
+      <p>center位置：</p>
       经度：<input v-model.number="center.lng" /> 纬度：<input
         v-model.number="center.lat"
       />
       缩放比例：<input v-model.number="zoom" />
     </div>
+    <hr>
+    <div class="title">
+      <p>定标位置：</p>
+      经度：<input v-model.number="center.lng" /> 纬度：<input
+        v-model.number="center.lat"
+      />
+      缩放比例：<input v-model.number="zoom" />
+    </div>
+     <hr>
     <baidu-map
       class="map"
       :center="center"
@@ -86,27 +96,50 @@
         @click="infoWindowOpen"
       >
         <bm-label
-          content="你动我就动"
+          content="我在这里下定标"
           :labelStyle="{ color: 'red', fontSize: '12px' }"
           :offset="{ width: -35, height: 30 }"
         />
-         <bm-info-window 
-          :show="show" 
-          @close="infoWindowClose" 
+        <bm-info-window
+          :show="show"
+          @close="infoWindowClose"
           @open="infoWindowOpen"
-          >我爱北京天安门</bm-info-window>
+          >我在这里哦</bm-info-window
+        >
       </bm-marker>
+      <!-- <bm-marker 
+        class="d1"
+        :position="labelPosition" 
+        :zoom="zoom"
+        dragging
+        :zIndex="99999999"
+        :gridSize="fontMarker"
+        :title="'我家在这里哦！'"
+        :labelStyle="{ color: 'red', fontSize: '12px',width: '35px', height: '35px' }"
+        :icon="{url: img, size:{width: 30, height: 30, fontSize: '10px', color: 'red'}}"
+        >
+        </bm-marker> -->
+
+        <!-- 自定义覆盖物 -->
+         <my-overlay
+            :position="{lng: 104.08, lat: 30.67994285}"
+            text="点击我"
+            :active="active"
+            @mouseover.native="active = true"
+            @mouseleave.native="active = false">
+          </my-overlay>
 
 
-
-      
     </baidu-map>
   </div>
 </template>
 
 <script>
+import MyOverlay from '@/components/MyOverlay'
 export default {
-  components: {},
+  components: {
+    MyOverlay
+  },
   data() {
     return {
       center: {
@@ -116,7 +149,7 @@ export default {
         lat: 0,
       },
       //缩放比例
-      zoom: 3,
+      zoom: 12,
       //自定义样式
       // :mapStyle="mapStyle"
       mapStyle: {
@@ -144,18 +177,24 @@ export default {
       },
       //标记文字
       show: true,
+      img: require('../../icon/jinggao.png'),
+      active: false
     };
   },
   mounted() {},
   methods: {
     //地图初始化
-    handler({ BMap, map }) {
-      console.log(BMap, map);
-      this.center.lng = 104.072745;
-      this.center.lat = 30.578994;
-      this.zoom = 12;
-      this.labelPosition.lng = 104.072745;
-      this.labelPosition.lat = 30.578994;
+    handler({ BMap }) {
+      let this_ = this;
+      let geolocation = new BMap.Geolocation();
+      geolocation.getCurrentPosition(
+        function(r) {
+          this_.center = { lng: r.longitude, lat: r.latitude }; // 设置center属性值
+          this_.labelPosition = { lng: r.longitude, lat: r.latitude }; // 设置label的属性值
+          this_.show = true;
+        },
+        { enableHighAccuracy: true }
+      );
     },
     /**
      * moving: 地图移动过程中触发此事件
@@ -211,19 +250,22 @@ export default {
     },
 
     //点击关闭标记弹框
-    infoWindowClose () {
-      this.show = false
+    infoWindowClose() {
+      this.show = false;
     },
     //点击打开标记弹框
-    infoWindowOpen () {
-      this.show = true
-    }
-    
+    infoWindowOpen() {
+      this.show = true;
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+* {
+  padding-top: 0;
+  margin-top: 0;
+}
 .map {
   width: 700px;
   height: 550px;
@@ -237,6 +279,20 @@ export default {
   margin-top: 40px;
 }
 .title {
-  padding: 20px 0;
+  padding-bottom: 20px;
+
+  &:first-of-type {
+    padding-top: 20px;
+  }
 }
+
+.fontMarker {
+  font-size: 12px;
+}
+
+/* /deep/ .BMap_Marker img {
+  width: 30px;
+  height: 50px;
+} */
+
 </style>

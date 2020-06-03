@@ -1743,6 +1743,11 @@ bmaplib.markerclusterer@^1.0.13:
   dependencies:
     bmaplib.texticonoverlay "^1.0.2"
 
+bmaplib.new-distancetool@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/bmaplib.new-distancetool/-/bmaplib.new-distancetool-1.0.0.tgz#ad146d843d1dad0a210d762f115c23fc71a3a5d0"
+  integrity sha512-g2lnHkkG3aWHO4NRhRib8l5AMh1ILTwOnOQxQSPKLWa1pNfW1QleMQ1Gz8E1mwifOUC2xIfD32EBripOeCovKA==
+
 bmaplib.texticonoverlay@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/bmaplib.texticonoverlay/-/bmaplib.texticonoverlay-1.0.2.tgz#d78546ea0f036d9fe964983796315b6c112a05bf"
@@ -8430,11 +8435,6 @@ vue@^2.6.11:
   version "2.6.11"
   resolved "https://registry.npm.taobao.org/vue/download/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
   integrity sha1-dllNh31LEiNEBuhONSdcbVFBJcU=
-
-vuex@^3.1.3:
-  version "3.4.0"
-  resolved "https://registry.npm.taobao.org/vuex/download/vuex-3.4.0.tgz#20cc086062d750769fce1febb34e7fceeaebde45"
-  integrity sha1-IMwIYGLXUHafzh/rs05/zurr3kU=
 
 watchpack-chokidar2@^2.0.0:
   version "2.0.0"
