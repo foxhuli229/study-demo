@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-05-26 10:03:35
- * @LastEditTime: 2020-05-27 14:35:01
+ * @LastEditTime: 2020-06-10 09:54:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vue-baidumap\src\views\Map.vue
@@ -87,13 +87,11 @@
 
       <!-- 标记： https://dafrok.github.io/vue-baidu-map/#/zh/overlay/marker-->
       <bm-marker
+        :icon="{url: 'http://192.168.0.201:8855//uploadFiles/202006/20200609142043316.png', size: { width: 30, height: 30 }}"
         :position="labelPosition"
-        :dragging="true"
-        animation="BMAP_ANIMATION_DROP"
+        :dragging="false"
         :zoom="zoom"
-        @mousedown="bmMousedown"
-        @dragend="bmdragend"
-        @click="infoWindowOpen"
+        @click="infoWindowOpen('1')"
       >
         <bm-label
           content="我在这里下定标"
@@ -101,9 +99,8 @@
           :offset="{ width: -35, height: 30 }"
         />
         <bm-info-window
-          :show="show"
-          @close="infoWindowClose"
-          @open="infoWindowOpen"
+          :show="icon.show"
+          @close="infoWindowClose('1')"
           >我在这里哦</bm-info-window
         >
       </bm-marker>
@@ -176,7 +173,9 @@ export default {
         lat: 0,
       },
       //标记文字
-      show: true,
+     icon: {
+      show: true
+     },
       img: require('../../icon/jinggao.png'),
       active: false
     };
@@ -191,7 +190,7 @@ export default {
         function(r) {
           this_.center = { lng: r.longitude, lat: r.latitude }; // 设置center属性值
           this_.labelPosition = { lng: r.longitude, lat: r.latitude }; // 设置label的属性值
-          this_.show = true;
+          // this_.icon.show = true;
         },
         { enableHighAccuracy: true }
       );
@@ -251,11 +250,11 @@ export default {
 
     //点击关闭标记弹框
     infoWindowClose() {
-      this.show = false;
+      this.icon.show = false;
     },
     //点击打开标记弹框
     infoWindowOpen() {
-      this.show = true;
+      this.icon.show = true;
     },
   },
 };

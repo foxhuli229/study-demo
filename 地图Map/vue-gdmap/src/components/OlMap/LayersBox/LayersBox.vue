@@ -174,13 +174,13 @@ export default {
           }
           &.active{
             >span{
-              background-color:$theme-color;
+              background-color:#409eff;
             }
           }
           &:hover{
-            border:1px solid $theme-color;
+            border:1px solid #409eff;
             >span{
-              background-color:$theme-color;
+              background-color:#409eff;
             }
           }
         }
@@ -190,19 +190,19 @@ export default {
     .vec_type{
       z-index:4;
       left:10px;
-      border-left:1px solid $theme-color;
+      border-left:1px solid #409eff;
     }
     /*影像*/
     .img_type{
       left:35px;
       z-index:3;
-      border-left:1px solid$theme-color;
+      border-left:1px solid #409eff;
     }
     /*地形*/
     .ter_type{
       z-index:2;
       left:60px;
-      border-left:1px solid $theme-color;
+      border-left:1px solid #409eff;
     }
     .expand{
       .layer_container{
@@ -210,19 +210,19 @@ export default {
         .vec_type{
           z-index:4;
           left:15px;
-          border-left:1px solid $theme-color;
+          border-left:1px solid #409eff;
         }
         /*影像*/
         .img_type{
           left:90px;
           z-index:3;
-          border-left:1px solid $theme-color;
+          border-left:1px solid #409eff;
         }
         /*地形*/
         .ter_type{
           z-index:2;
           left:166px;
-          border-left:1px solid $border-color;
+          border-left:1px solid #dcdfe6;
         }
       }
     }
@@ -238,6 +238,6 @@ export default {
     min-font-size: 8px;
   }
   .layer-item.active .layer-tip {
-    background: $theme-color;
+    background: #409eff;
   }
 </style>

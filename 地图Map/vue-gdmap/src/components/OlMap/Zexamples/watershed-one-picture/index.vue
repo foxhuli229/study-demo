@@ -1,5 +1,6 @@
 <template>
   <div class="ol-map">
+    dd
     <command-dispatch
       ref="dispatchChild"
       :tree-data="treeData"

@@ -1,43 +1,150 @@
-/*
- * @Author: your name
- * @Date: 2020-04-29 17:23:28
- * @LastEditTime: 2020-05-28 14:26:26
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: \ZCY.Platform.PlatformManagementWeb\src\utils\request.js
- */
 import axios from 'axios'
-import {
-  MessageBox,
-  Message,
-  Loading
-} from 'element-ui'
+import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
-import {
-  getToken
-} from '@/utils/auth'
-
-import router from "@/router"
+import qs from 'qs'
 
 // create an axios instance
 const service = axios.create({
-  withCredentials: true,
-  timeout: 5000,
-  headers: {
-    Accept: 'application/json, text/plain, */*; charset=utf-8',
-    "Content-Type": "application/json;charset=utf-8"
-  }
+  // withCredentials: true, // send cookies when cross-domain requests
+  timeout: 50000 // request timeout
 })
 
+const convertData = (data, converter) => {
+  if (converter && typeof converter === 'function') {
+    if (data.hasOwnProperty('records')) {
+      const res = {
+        ...data,
+        records: converter(data)
+      }
+      return res
+    } else {
+      return converter(data)
+    }
+  } else {
+    return data
+  }
+}
+const api = (url, method, param, converter, customConfig) => {
+  if (customConfig) {
+    if (customConfig.loading && customConfig.loading === false) {
+      store.dispatch('app/disableGlobalLoading')
+    }
+  }
+  if (method === 'get' || method === 'delete') {
+    return new Promise((resolve, reject) => {
+      service({
+        method: method,
+        url,
+        params: param
+      })
+        .then(res => {
+          const data = convertData(res.data, converter)
+          resolve(data)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+  } else if (method === 'postForm') {
+    return new Promise((resolve, reject) => {
+      service({
+        method: 'post',
+        url,
+        data: param,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        transformRequest: [
+          (data) => {
+            return qs.stringify(data)
+          }
+        ]
+      })
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+  } else {
+    return new Promise((resolve, reject) => {
+      service({
+        method: method,
+        url,
+        data: param
+      })
+        .then(res => {
+          const data = convertData(res.data, converter)
+          resolve(data)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+  }
+}
+
+const download = (url, method = 'get', param, customConfig) => {
+  if (method === 'get') {
+    return new Promise((resolve, reject) => {
+      service({
+        method: method,
+        url,
+        params: param,
+        responseType: 'blob'
+      })
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+  } else {
+    return new Promise((resolve, reject) => {
+      service({
+        method: method,
+        url,
+        data: param,
+        responseType: 'blob'
+      })
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+  }
+}
+
+const SUCCESS_STATUS_CODE = 200
+const SUCCESS_DATA_CODE = 200
+const ERROR_TOKEN_DATA_CODE = ['403', '401', 9900]
+
+let requestCount = 0
 // request interceptor
 service.interceptors.request.use(
   config => {
-    if (getToken()) {
-      config.headers['access_token'] = getToken() || ""
+    // do something before request is sent
+    requestCount++
+    if (store.getters['user/token']) {
+      // let each request carry token
+      // ['Authorization'] is a custom headers key
+      // please modify it according to the actual situation
+      config.headers['Authorization'] = store.getters['user/token']
     }
+    if (config.url.indexOf('http') === -1 && config.url.indexOf('api') > -1) {
+      const curProjectConfig = store.getters['app/appConfig']
+      config.url = curProjectConfig && curProjectConfig.apiContext ? `${curProjectConfig.apiContext}${config.url}` : config.url
+    }
+    !store.getters.closeGlobalLoading && store.dispatch('app/showGlobalLoading')
     return config
   },
   error => {
+    requestCount++
+    // do something with request error
     console.log(error) // for debug
     return Promise.reject(error)
   }
@@ -45,118 +152,95 @@ service.interceptors.request.use(
 
 // response interceptor
 service.interceptors.response.use(
+  /**
+   * If you want to get http information such as headers or status
+   * Please return  response => response
+  */
+
+  /**
+   * Determine the request status by custom code
+   * Here is just an example
+   * You can also judge the status by HTTP Status Code
+   */
   response => {
     const res = response.data
-
-    if (res.Header.ResultType !== 1) {
+    requestCount--
+    requestCount === 0 && store.dispatch('app/hideGlobalLoading')
+    store.getters.closeGlobalLoading && store.dispatch('app/enableGlobalLoading')
+    // if the custom code is not 20000, it is judged as an error.
+    if (ERROR_TOKEN_DATA_CODE.some(one => one === res.code)) {
+      // to re-login
+      MessageBox.confirm('登录已过期！您可以点击取消停留在此页，或者重新登录！', '提示', {
+        confirmButtonText: '重新登录',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        store.dispatch('user/resetToken').then(() => {
+          location.reload()
+        })
+      })
+    }
+    if (response.status !== SUCCESS_STATUS_CODE) {
       Message({
-        message: res.Header.Msg || '接口出现错误！',
+        message: res.msg || 'Error',
         type: 'error',
-        showClose: true,
         duration: 5 * 1000
       })
-
-      // return Promise.reject(new Error (res.Header.Msg || 'error'))
-      return (res || 'error')
-
+      return Promise.reject(new Error(res.msg || 'Error'))
     } else {
-
-      return res
+      if (res.code && res.code !== SUCCESS_DATA_CODE) {
+        Message({
+          message: res.msg || 'Error',
+          type: 'error',
+          duration: 5 * 1000
+        })
+        return Promise.reject(new Error(res.msg || 'Error'))
+      }
+      return response
     }
   },
   error => {
-    console.debug(error);
-    // debugger
-    let code = error.response.status; //错误返回状态码
-    if (code === 401) {
-      MessageBox.confirm(
-        '登录状态已过期，请重新登录',
-        '温馨提示', {
-          confirmButtonText: '重新登录',
-          showClose: false,
-          showCancelButton: false,
-          type: 'warning'
-        }
-      ).then(() => {
-
-        store.dispatch('user/resetToken').then(() => {
-          location.reload() // 为了重新实例化vue-router对象 避免bug
-        })
+    requestCount--
+    requestCount === 0 && store.dispatch('app/hideGlobalLoading')
+    store.getters.closeGlobalLoading && store.dispatch('app/enableGlobalLoading')
+    console.log('err' + error) // for debug
+    if (error.response.status === 401) {
+      store.dispatch('user/resetToken').then(() => {
+        location.reload()
       })
-
-      return error.response.data
-
-    } else if (code === 403) {
-      router.push({
-        path: '/401'
+      Message({
+        message: '登录已过期！',
+        type: 'error',
+        duration: 5 * 1000
       })
     } else {
       Message({
-        message: error.response.data.Message || "网络请求出现错误，请重试！",
+        message: error.message,
         type: 'error',
-        showClose: true,
         duration: 5 * 1000
       })
     }
-    return Promise.reject(error.response.data)
+    return Promise.reject(error)
   }
 )
-
-function api(url, method = 'get', param) {
-  return new Promise((resolve, reject) => {
-    service({
-        method: method,
-        url,
-        data: param,
-        params: method === 'post' ? null : param
-      })
-      .then(res => {
-        if (res.Header.ResultType === 1) {
-          return resolve(res)
-        }
-      })
-      .catch(error => {
-        // throw error
-        return reject(error)
-        // if (beforError && typeof(beforError) === 'function')
-        // reject(error)
-      })
-  })
+const getPublicPath = () => {
+  const curProjectConfig = store.getters['app/appConfig']
+  const publicPath = curProjectConfig.publicPath
+  return publicPath
 }
-
+const getApiContext = () => {
+  const curProjectConfig = store.getters['app/appConfig']
+  const apiContext = curProjectConfig.apiContext
+  return apiContext
+}
 export default {
-  getAxios() {
-    return service
-  },
-  baseApi(url, method, param) {
-    return api(url, method, param)
-  },
-  // get请求
-  get(url, param) {
-    for (var key in param) {
-      let str = param[key]
-      if (typeof str === 'string') {
-        str = str.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;')
-        param[key] = str
-      }
-    }
-    return api(url, 'get', param)
-  },
-  // post请求
-  post(url, param) {
-    return api(url, 'post', param)
-  },
-  // patch请求
-  patch(url, param) {
-    return api(url, 'patch', param)
-  },
-  // put请求
-  put(url, param) {
-    return api(url, 'put', param)
-  },
-  // delete请求
-  delete(url, param) {
-    return api(url, 'delete', param)
-  },
-  service
+  get: (url, param, customConfig) => api(url, 'get', param, customConfig),
+  post: (url, param, customConfig) => api(url, 'post', param, customConfig),
+  postForm: (url, param, customConfig) => api(url, 'postForm', param, customConfig),
+  del: (url, param, customConfig) => api(url, 'delete', param, customConfig),
+  put: (url, param, customConfig) => api(url, 'put', param, customConfig),
+  getFile: (url, param, customConfig) => download(url, 'get', param, customConfig),
+  postFile: (url, param, customConfig) => download(url, 'post', param, customConfig),
+  olmapBaseUrl: () => getPublicPath(),
+  getApiContext: () => getApiContext()
 }

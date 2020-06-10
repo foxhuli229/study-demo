@@ -438,9 +438,9 @@ export default {
           width: calc(100% - 70px);
         }
         .el-icon-search-button{
-          background-color: $theme-color;
+          background-color: #409eff;
           &:hover{
-            background-color: $hover-color;
+            background-color: #409eff;
             font-weight: bold;
           }
         }

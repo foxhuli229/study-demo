@@ -173,7 +173,7 @@ export default {
     font-size: 14px;
     color: white;
     display: inline-flex;
-    background-image: linear-gradient(to right, rgba(64, 158, 255, 0.77), $theme-color);
+    background-image: linear-gradient(to right, rgba(64, 158, 255, 0.77), #409eff);
     .popup-name-dragx{
       font-size: 12px;
       width: 60px;

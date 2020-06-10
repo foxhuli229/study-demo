@@ -1,44 +1,116 @@
-/*
- * @Author: your name
- * @Date: 2020-05-26 09:48:37
- * @LastEditTime: 2020-06-03 11:24:30
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: \vue-gdmap\src\router\index.js
- */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-/* Layout */
-import Layout from '@/layout'
-
 Vue.use(VueRouter)
 
-const routes = [{
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
-  },
-  {
-    path: '/404',
-    component: () => import('@/views/404'),
-    hidden: true
-  },
+const routes = [
   {
     path: '/',
-    component: Layout,
-    name: 'Home',
-    redirect: '/home',
-    children: [{
-      path: 'home',
-      name: 'Home',
-      component: () => import('@/views/home/index'),
-      meta: { title: '首页', icon: 'dashboard' }
-    }]
+    name: 'home',
+    meta: {
+      title: '首页'
+    },
+    component: () => import('@/views/home'),
   },
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  {
+    path: '/home',
+    name: 'Home',
+    meta: {
+      title: '基本地图'
+    },
+    component: () => import('@/views/home/index'),
+  },
+  {
+    path: '/demo-map/watershed-one-picture-demo',
+    name: '流域监管一张图',
+    meta: {
+      title: '流域监管一张图'
+    },
+    component: () => import('@/components/OlMap/Zexamples/watershed-one-picture')
+  },
+  {
+    path: '/watershed-risk-analysis-demo',
+    name: '流域风险分析-[饮用水源地+河流断面]',
+    meta: {
+      title: '流域风险分析-[饮用水源地+河流断面]'
+    },
+    component: () => import('@/components/OlMap/Zexamples/watershed-risk-analysis')
+  },
+  {
+    path: '/ol-sichuan',
+    name: '四川地图',
+    meta: {
+      title: '四川地图'
+    },
+    component: () => import('@/components/OlMap/Zexamples/base')
+  },
+  {
+    path: '/ol-map',
+    name: '***一张图',
+    meta: {
+      title: '***一张图'
+    },
+    component: () => import('@/components/OlMap/Zexamples/ol-map')
+  },
+  {
+    path: '/dot-map',
+    name: '打点，画线，画面',
+    meta: {
+      title: '打点，画线，画面'
+    },
+    component: () => import('@/components/OlMap/Zexamples/dotmap')
+  },
+  {
+    path: '/enter-bz',
+    name: '企业标注',
+    meta: {
+      title: '企业标注'
+    },
+    component: () => import('@/components/OlMap/Zexamples/enter-bz')
+  },
+  {
+    path: '/envir-quality',
+    name: '环境质量GIS',
+    meta: {
+      title: '环境质量GIS'
+    },
+    component: () => import('@/components/OlMap/Zexamples/envir-quality')
+  },
+  {
+    path: '/industry-distribution',
+    name: '警情分布',
+    meta: {
+      title: '警情分布'
+    },
+    component: () => import('@/components/OlMap/Zexamples/industry-distribution')
+  },
+  {
+    path: '/command-dispatch',
+    name: '指挥调度',
+    meta: {
+      title: '指挥调度'
+    },
+    component: () => import('@/components/OlMap/Zexamples/command-dispatch')
+  },
+  {
+    path: '/grid-one-picture',
+    name: '网格化管理一张图',
+    meta: {
+      title: '网格化管理一张图'
+    },
+    component: () => import('@/components/OlMap/Zexamples/grid-one-picture')
+  },
+  {
+    path: '/one-picture-control-demo',
+    name: '一图管控',
+    meta: {
+      title: '一图管控'
+    },
+    component: () => import('@/components/OlMap/Zexamples/one-picture-control')
+  }
 ]
+
+   
 
 const router = new VueRouter({
   mode: 'history',

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-06-03 16:51:13
- * @LastEditTime: 2020-06-03 17:57:16
+ * @LastEditTime: 2020-06-05 14:44:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vue-openlayers\src\views\openLayersMap\printMap.vue
@@ -48,9 +48,11 @@ export default {
   },
   methods: {
     mapint() {
+      // 瓦片数据源
       this.raster = new TileLayer({
         source: new OSM(),
       });
+      // 对应的是矢量地图源，点，线，面等等常用的地图元素(Feature)
       this.source = new VectorSource();
       this.vector = new VectorLayer({
         source: this.source,
@@ -62,6 +64,7 @@ export default {
             color: "#ffcc33",
             width: 2,
           }),
+          //圈的样式设置
           image: new CircleStyle({
             radius: 7,
             fill: new Fill({

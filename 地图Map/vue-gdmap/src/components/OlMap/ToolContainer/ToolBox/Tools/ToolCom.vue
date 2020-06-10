@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-06-03 09:40:32
+ * @LastEditTime: 2020-06-05 16:06:35
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \地图Map\vue-gdmap\src\components\OlMap\ToolContainer\ToolBox\Tools\ToolCom.vue
+--> 
 <template>
   <div class="tool-item-box">
     <a href="javascript:;" class="tool-item" @click.stop="clickItem(item)">
@@ -35,7 +43,7 @@ export default {
     position: relative;
     .tool-item{
       &:hover{
-        color: $hover-color
+        color: #409eff
       }
       .toolbd{
         color: red;

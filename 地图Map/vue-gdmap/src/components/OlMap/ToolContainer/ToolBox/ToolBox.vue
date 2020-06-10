@@ -120,7 +120,7 @@ export default {
       height: 24px;
     }
     .tool-item:hover .tool-text  {
-      color: $hover-color
+      color:#409eff
     }
     .slide-tool-box-enter-active {
       transition: all .2s ease-in-out;

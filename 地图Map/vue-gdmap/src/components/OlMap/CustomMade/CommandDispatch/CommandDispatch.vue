@@ -1,5 +1,6 @@
 <template>
   <ol-map ref="olMapChildIndustry" @registerSingleClickEvent="mapSingleClickEvent">
+    dd1
     <template #popup>
       <div v-if="$slots.DispatchPopup" slot="DispatchPopup">
         <slot name="DispatchPopup" />
@@ -295,7 +296,8 @@ export default {
               if (keyObj !== undefined) {
                 if (keyObj.iconName !== undefined) {
                   this.$set(item, 'state', keyObj)
-                  const marker = this.olmap._addIconMarkersScale(item, `/static/olmap/images/thematic-layer/${keyObj.iconName}.png`, 1, this)
+                  // const marker = this.olmap._addIconMarkersScale(item, `/static/olmap/images/thematic-layer/${keyObj.iconName}.png`, 1, this)
+                  const marker = this.olmap._addIconMarkersScale(item, `@/assets/images/thematic-layer/${keyObj.iconName}.png`, 1, this)
                   this.markerArray.push(marker)
                 }
               }

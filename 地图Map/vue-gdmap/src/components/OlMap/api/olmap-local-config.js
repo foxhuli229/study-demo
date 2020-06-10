@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-06-03 09:40:32
+ * @LastEditTime: 2020-06-05 15:59:30
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \地图Map\vue-gdmap\src\components\OlMap\api\olmap-local-config.js
+ */ 
 import request from '@/utils/request'
 /**
  * 读取本地配置参数
@@ -5,7 +13,8 @@ import request from '@/utils/request'
 export default class OlMapLocalConfig {
   /* 拿本地配置参数*/
   static configOlMap = () => {
-    const configObject = request.get(`${request.olmapBaseUrl()}/static/olmap/olmap.json`).then(res => {
+    // const configObject = request.get(`${request.olmapBaseUrl()}/static/olmap/olmap.json`).then(res => {
+      const configObject = request.get('/static/olmap/olmap.json').then(res => {
       res[res.type].type = res.type
       res[res.type].olmapUrl = request.olmapBaseUrl()
       return res[res.type]

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-26 10:01:47
- * @LastEditTime: 2020-05-27 15:41:17
+ * @LastEditTime: 2020-06-08 11:24:16
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vue-baidumap\src\router\index.js
@@ -46,6 +46,24 @@ const routes = [
       title: 'vue-baidumap-地图'
     },
     component: (resolve) => require(['@/views/Map/Map3'], resolve),
+  },
+
+  {
+    path: '/baiduMap4',
+    name: 'BaiduMap4',
+    meta: {
+      title: '百度地图-引用百度地图官网api'
+    },
+    component: (resolve) => require(['@/views/BaiduApiMap/baiduMap'], resolve),
+  },
+
+  {
+    path: '/map4',
+    name: 'Map4',
+    meta: {
+      title: '带搜索功能-地图'
+    },
+    component: (resolve) => require(['@/views/Map/map4'], resolve),
   }
 ]
 

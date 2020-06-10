@@ -1,4 +1,12 @@
-import Main from '*/views/main'
+/*
+ * @Author: your name
+ * @Date: 2020-06-03 09:40:32
+ * @LastEditTime: 2020-06-05 16:31:49
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \地图Map\vue-gdmap\src\components\OlMap\Zexamples\router\index.js
+ */ 
+import Main from '@/main'
 export const routeMap = {
   path: '/demo-map',
   component: Main,

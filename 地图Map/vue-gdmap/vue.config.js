@@ -1,42 +1,30 @@
 'use strict'
 const path = require('path')
+
 const defaultSettings = require('./src/settings.js')
 
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-const name = defaultSettings.title || 'DEMO·后台管理系统' // page title
+const name = defaultSettings.name || 'DEMO·地图' // page title
+
 
 module.exports = {
   publicPath: '/',
   outputDir: 'dist',
   assetsDir: 'static',
-  // lintOnSave: process.env.NODE_ENV === 'development',
   lintOnSave: false, //关闭验证
   productionSourceMap: false,
   devServer: {
-    // open: false,
-    // overlay: {
-    //   warnings: false,
-    //   errors: true
-    // },
-    // proxy: {
-    //   [process.env.VUE_APP_BASE_API]: {
-    //     target: `http://localhost:${port}/mock`,
-    //     changeOrigin: true,
-    //     pathRewrite: {
-    //       ['^' + process.env.VUE_APP_BASE_API]: ''
-    //     }
-    //   }
-    // },
-    // after: require('./mock/mock-server.js')
+    port: '8000'
   },
   configureWebpack: {
     name: name,
     resolve: {
       alias: {
-        '@': resolve('src')
+        '@': resolve('src'),
+        '*': resolve(defaultSettings.localPath)
       }
     }
   },
@@ -44,15 +32,20 @@ module.exports = {
     config.plugins.delete('preload') // TODO: need test
     config.plugins.delete('prefetch') // TODO: need test
 
+    config.plugin('define').tap(args => {
+      args[0].PROJECT_CONFIG = JSON.stringify(defaultSettings)
+      return args
+    })
+
     // set svg-sprite-loader
     config.module
       .rule('svg')
-      .exclude.add(resolve('src/icons'))
+      .exclude.add(resolve('src/icons'), resolve('src/components'))
       .end()
     config.module
       .rule('icons')
       .test(/\.svg$/)
-      .include.add(resolve('src/icons'))
+      .include.add(resolve('src/icons'), resolve('src/components'))
       .end()
       .use('svg-sprite-loader')
       .loader('svg-sprite-loader')
@@ -73,7 +66,7 @@ module.exports = {
       .end()
 
     config
-    // https://webpack.js.org/configuration/devtool/#development
+      // https://webpack.js.org/configuration/devtool/#development
       .when(process.env.NODE_ENV === 'development',
         config => config.devtool('cheap-source-map')
       )
@@ -85,7 +78,7 @@ module.exports = {
             .plugin('ScriptExtHtmlWebpackPlugin')
             .after('html')
             .use('script-ext-html-webpack-plugin', [{
-            // `runtime` must same as runtimeChunk name. default is `runtime`
+              // `runtime` must same as runtimeChunk name. default is `runtime`
               inline: /runtime\..*\.js$/
             }])
             .end()

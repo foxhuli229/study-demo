@@ -174,7 +174,7 @@ export default {
           border-bottom: 1px solid #ededff;
           &:hover{
             cursor: pointer;
-            color: $theme-color;
+            color: #409eff;
             font-size: 15px;
             font-weight: bold;
           }

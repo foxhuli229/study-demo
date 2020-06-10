@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-06-03 14:38:55
+ * @LastEditTime: 2020-06-05 09:30:16
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \vue-openlayers\src\router\index.js
+ */ 
 import Vue from 'vue'
 import Router from 'vue-router'
 
@@ -15,7 +23,7 @@ export const constantRoutes = [{
     path: '/map',
     name: 'Map',
     meta: {
-      title: '基本地图'
+      title: '基本地图-定制logo'
     },
     component: () => import('@/views/openLayersMap/map'),
   },
@@ -35,6 +43,41 @@ export const constantRoutes = [{
     },
     component: () => import('@/views/openLayersMap/pointMap'),
   },
+  {
+    path: '/pointLabelMap',
+    name: 'PointLabelMap',
+    meta: {
+      title: 'Feature类实现批量标注点位上图功能'
+    },
+    component: () => import('@/views/openLayersMap/pointLabelMap'),
+  },
+  {
+    path: '/openlayersAndBaiDuMap',
+    name: 'OpenlayersAndBaiDuMap',
+    meta: {
+      title: 'openlayers结合百度地图api实现定位功能'
+    },
+    component: () => import('@/views/openLayersMap/openlayersAndBaiDuMap'),
+  },
+  {
+    path: '/mapnavigation',
+    name: 'MapNavigation',
+    meta: {
+      title: '地图导航'
+    },
+    component: () => import('@/views/openLayersMap/mapnavigation'),
+  },
+
+  {
+    path: '/tileBaiduMap',
+    name: 'TileBaiduMap',
+    meta: {
+      title: '瓦片-百度地图'
+    },
+    component: () => import('@/views/openLayersMap/tileBaiduMap'),
+  },
+ 
+ 
  
 ]
 

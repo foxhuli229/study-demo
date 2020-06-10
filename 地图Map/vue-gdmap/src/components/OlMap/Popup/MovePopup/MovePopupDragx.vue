@@ -240,7 +240,7 @@ export default {
       color: white;
       display: inline-flex;
       min-width: 220px;
-      background-image: linear-gradient(to right, rgba(64, 158, 255, 0.77), $theme-color);;
+      background-image: linear-gradient(to right, rgba(64, 158, 255, 0.77), #409eff);;
       .popup-name-dragx{
         font-size: 14px;
         width: auto;
