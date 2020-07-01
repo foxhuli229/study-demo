@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-05-26 10:03:35
- * @LastEditTime: 2020-06-12 14:25:57
+ * @LastEditTime: 2020-06-09 18:05:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vue-baidumap\src\views\Map.vue
@@ -15,22 +15,20 @@
       />
       缩放比例：<input v-model.number="zoom" />
     </div>
-
     <div class="title">
-      IconItem:
-      <el-input
-        type="textarea"
-        :autosize="{ minRows: 2, maxRows: 4 }"
-        placeholder="请输入内容"
-        v-model="iconItem[1].labelStyle.background"
-      >
-      </el-input>
+      <p>定标位置：</p>
+      经度：<input v-model.number="initPosition.lng" /> 纬度：<input
+        v-model.number="initPosition.lat"
+      />
+      缩放比例：<input v-model.number="initzoom" />
     </div>
+    <hr />
 
     <!-- :mapStyle="mapstyleJson" -->
     <baidu-map
       :center="center"
       :zoom="zoom"
+      :minZoom="8"
       scroll-wheel-zoom
       @ready="handler"
       @moving="syncCenterAndZoom"
@@ -39,12 +37,12 @@
     >
       <bm-view class="map" style="flex: 1"></bm-view>
       <!-- 缩放控件：https://dafrok.github.io/vue-baidu-map/#/zh/control/navigation -->
-      <bm-navigation
+      <!-- <bm-navigation
         anchor="BMAP_ANCHOR_BOTTOM_LEFT"
         type="BMAP_NAVIGATION_CONTROL_LARGE"
         showZoomInfo
         enableGeolocation
-      ></bm-navigation>
+      ></bm-navigation> -->
 
       <!-- 地图类型 地图、混合：https://dafrok.github.io/vue-baidu-map/#/zh/control/map-type -->
       <bm-map-type
@@ -62,39 +60,36 @@
       ></bm-geolocation>
 
       <!-- 标记： https://dafrok.github.io/vue-baidu-map/#/zh/overlay/marker
+        :icon="typeof item.icon != 'undefined' && item.icon != '' ? item.icon : ''"
       -->
-      <div v-for="(item, index) in iconItem" :key="index">
-        <bm-marker
-          :icon="item.icon != {} ? item.icon : ''"
-          :position="item.position"
-          :dragging="item.dragging"
-          animation="BMAP_ANIMATION_DROP"
-          :zoom="zoom"
-          @mousedown="bmMousedown"
-          @click="openWinMet(index)"
-        >
-          <bm-label
-            ref="customOverlay"
-            :content="item.content"
-            :title="item.title"
-            :labelStyle="item.labelStyle"
-            :offset="{ width: -35, height: 30 }"
-          />
-          <template v-if="item.icon != {} && item.show">
-            <bm-overlay
-              pane="labelPane"
-              :data-position="JSON.stringify(item.position)"
-              :class="{ sample: true }"
-              @draw="draw"
-            >
-              <div class="cont">
-                {{ item.winInfo }}
-                <i class="el-icon-close" @click="openWinMet(index)"></i>
-              </div>
-            </bm-overlay>
-          </template>
-        </bm-marker>
-      </div>
+      <bm-marker
+        v-for="(item, index) in iconItem"
+        :key="index"
+        :icon="
+          typeof item.icon != 'undefined' && item.icon != '' ? item.icon : ''
+        "
+        :position="item.position"
+        :dragging="item.dragging"
+        animation="BMAP_ANIMATION_DROP"
+        :zoom="zoom"
+        @mousedown="bmMousedown"
+        @click="infoWindowOpen(index)"
+      >
+        <bm-label
+          :content="item.content"
+          :title="item.title"
+          :labelStyle="item.labelStyle"
+          :offset="{ width: -35, height: 30 }"
+        />
+        <template v-if="typeof item.icon != 'undefined' && item.icon == ''">
+          <bm-info-window
+            :show="show"
+            @close="infoWindowClose(index)"
+            @open="infoWindowOpen(index)"
+            >{{ item.winInfo }}
+          </bm-info-window>
+        </template>
+      </bm-marker>
 
       <!-- 自定义控件 - 指南针 -->
       <bm-control class="compass" anchor="BMAP_ANCHOR_TOP_LEFT">
@@ -170,12 +165,17 @@ export default {
         //Y轴值 经纬度。
         lat: 0,
       },
+
       //默认初始化的地图数据
       initPosition: {
         lng: 104.06792346,
         lat: 30.67994285,
       },
       initzoom: 12,
+      //地图样式
+      mapstyleJson: {
+        styleJson: mapstyleJson,
+      },
 
       //图标
       iconItem: [
@@ -207,7 +207,8 @@ export default {
         {
           position: { lng: 103.85923, lat: 30.613271 },
           icon: {
-           
+            url: "http://api0.map.bdimg.com/images/marker_red_sprite.png",
+            size: { width: 30, height: 30 },
           },
           dragging: false,
           content: "弘基木业 77",
@@ -224,14 +225,14 @@ export default {
           },
           winInfo: "弘基木业-超标了",
         },
+
       ],
+      show: true,
 
       //搜索
       keyword: "",
 
       loadingInstance: "",
-
-      IntervalOld: null,
     };
   },
   mounted() {
@@ -245,16 +246,6 @@ export default {
   destroyed() {
     this.distanceTool && this.distanceTool.close();
   },
-  watch: {
-    iconItem: {
-      handler() {
-        console.log(this.$refs);
-        
-        // this.$refs.customOverlay[0].reload(); // 当位置发生变化时，重新渲染，内部会调用draw
-      },
-      deep: true,
-    },
-  },
   methods: {
     //地图初始化
     handler({ BMap }) {
@@ -264,6 +255,12 @@ export default {
         function(r) {
           this_.center = { lng: r.longitude, lat: r.latitude }; // 设置center属性值
           this_.initPosition = { lng: r.longitude, lat: r.latitude }; // 设置label的属性值
+          for(let i=0; i<this_.iconItem; i++) {
+            this_.iconItem[i].show = true
+          }
+
+          console.log(this_.iconItem);
+
         },
         { enableHighAccuracy: true }
       );
@@ -298,6 +295,20 @@ export default {
       // console.log(type, target);
     },
 
+    //点击关闭标记弹框
+    infoWindowClose(index) {
+      console.log("infoWindowClose", index);
+      this.iconItem[index].show = false;
+    },
+    //点击打开标记弹框
+    infoWindowOpen(index) {
+      console.log("infoWindowOpen", index);
+      console.log(this.iconItem);
+      console.log(this.iconItem[index]);
+
+      this.iconItem[index].show = true;
+    },
+
     /**
      * 指南针
      */
@@ -305,39 +316,10 @@ export default {
       console.log("点击了指南针");
     },
 
-    //创建覆盖物
-    draw({ BMap, map, el, overlay }) {
-      let position = JSON.parse(el.getAttribute("data-position"));
-      const pixel = map.pointToOverlayPixel(
-        new BMap.Point(position.lng, position.lat)
-      );
-      el.style.left = pixel.x - 60 + "px";
-      el.style.top = pixel.y - 120 + "px";
-    },
-
-    //提示弹框
-    openWinMet(index) {
-      this.iconItem[index].show = !this.iconItem[index].show;
-    },
-
     //还原按钮
     initPositionMet() {
       this.center = { ...this.initPosition };
       this.zoom = this.initzoom;
-    },
-
-    //添加数据
-    setIconList() {
-      console.log("添加了一次");
-
-      let color = this.iconItem[1].labelStyle.background;
-      console.log(color);
-
-      if (color === "rgba(255, 210, 2, 0.7)") {
-        this.iconItem[1].labelStyle.background = "rgba(43, 207, 41, 0.7)";
-      } else {
-        this.iconItem[1].labelStyle.background = "rgba(255, 210, 2, 0.7)";
-      }
     },
   },
 };
@@ -442,65 +424,14 @@ export default {
 }
 
 .sample {
+  width: auto;
+  background: rgba(0, 0, 0, 0.5);
+  /* overflow: hidden; */
+  color: #fff;
+  text-align: center;
+  padding: 10px;
   position: absolute;
-  width: 210px;
-  height: 100px;
-  padding: 18px 12px 12px 12px;
-  border: 1px solid #eee;
-  box-sizing: border-box;
-  box-shadow: 28px 14px 10px 0px rgba(140, 140, 140, 0.5);
-  font-size: 12px;
-  background: #fff;
-  color: #000;
-
-  //三角形
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: -9px;
-    left: 45px;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 10px solid #fff;
-  }
-
-  .cont {
-    width: 98.5%;
-    height: 100%;
-    overflow-y: auto;
-    border: none;
-
-    &::-webkit-scrollbar {
-      /*滚动条整体样式*/
-      width: 3px; /*高宽分别对应横竖滚动条的尺寸*/
-    }
-
-    &::-webkit-scrollbar-thumb {
-      /*滚动条里面小方块*/
-      border-radius: 10px;
-      -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-      background: #909399;
-    }
-
-    &::-webkit-scrollbar-track {
-      /*滚动条里面轨道*/
-      -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-      border-radius: 10px;
-      background: #ededed;
-    }
-  }
-
-  /* 关闭 */
-  .el-icon-close {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    box-shadow: 28px 14px 10px 0px rgba(140, 140, 140, 0.5);
-    font-size: 15px;
-    font-weight: bold;
-    color: #9c9797;
-    cursor: pointer;
-  }
+  border: 3px solid #ffffff;
 }
 
 /* 自定义控件- 按钮样式 */

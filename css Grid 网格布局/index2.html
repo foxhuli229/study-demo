@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .wrapper div {
+            padding: 1rem;
+            background: #eeeeee;
+            /* border: 1px solid #000000; */
+        }
+
+        .wrapper>div:nth-child(odd) {
+            background: #cccccc;
+        }
+
+        .wrapper {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            /* grid-gap 被更改为 gap */
+            gap: 1rem;
+            grid-auto-rows: minmax(100px, auto);
+        }
+        .outinner {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            grid-auto-rows: 70px;
+        }
+        .outinner > div {
+            background: #cccccc;
+            border: 1px solid;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div>Lorem ipsum dolor sit.</div>
+        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad quis dolorem voluptatibus atque beatae aut inventore unde sequi iure blanditiis, in qui. Quidem veritatis asperiores error blanditiis! Hic iure laboriosam quas non iste obcaecati debitis dolore excepturi. Odit, recusandae. In vel harum maiores unde, tenetur asperiores incidunt quo sunt adipisci voluptas accusantium quaerat exercitationem atque fugiat laborum voluptatem laudantium voluptatibus blanditiis eaque officiis? Sint, consequatur dicta. Sapiente perspiciatis quis quam! Nam quam sit itaque adipisci cum magni sapiente assumenda autem natus temporibus impedit quas a repellat, culpa odit ratione sunt, veniam voluptatibus! Nulla blanditiis dicta ipsum sequi unde. Nihil, quasi.</div>
+        <div>Lorem ipsum dolor sit.</div>
+        <div class="outinner">
+            <div class="box-1">box-1</div>
+            <div class="box-2">box-2</div>
+            <div class="box-3">box-3</div>
+            <div class="box-4">box-4</div>
+            <div class="box-4">box-4</div>
+            <div class="box-4">box-4</div>
+            <div class="box-4">box-4</div>
+            <div class="box-4">box-4</div>
+            <div class="box-4">box-4</div>
+            <div class="box-4">box-4</div>
+            <div class="box-4">box-4</div>
+            <div class="box-4">box-4</div>
+            <div class="box-4">box-4</div>
+            <div class="box-4">box-4</div>
+            <div class="box-4">box-4</div>
+            <div class="box-4">box-4</div>
+            <div class="box-4">box-4</div>
+        </div>
+        <div>Lorem ipsum dolor sit.</div>
+        <div>Lorem ipsum dolor sit.</div>
+        <div>Lorem ipsum dolor sit.</div>
+    </div>
+</body>
+
+</html>

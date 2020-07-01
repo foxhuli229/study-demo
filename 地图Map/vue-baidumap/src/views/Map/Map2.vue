@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-05-26 10:03:35
- * @LastEditTime: 2020-06-10 09:54:58
+ * @LastEditTime: 2020-06-10 15:39:26
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vue-baidumap\src\views\Map.vue
@@ -15,7 +15,7 @@
       />
       缩放比例：<input v-model.number="zoom" />
     </div>
-    <hr>
+    <hr />
     <div class="title">
       <p>定标位置：</p>
       经度：<input v-model.number="center.lng" /> 纬度：<input
@@ -23,7 +23,7 @@
       />
       缩放比例：<input v-model.number="zoom" />
     </div>
-     <hr>
+    <hr />
     <baidu-map
       class="map"
       :center="center"
@@ -87,55 +87,52 @@
 
       <!-- 标记： https://dafrok.github.io/vue-baidu-map/#/zh/overlay/marker-->
       <bm-marker
-        :icon="{url: 'http://192.168.0.201:8855//uploadFiles/202006/20200609142043316.png', size: { width: 30, height: 30 }}"
-        :position="labelPosition"
-        :dragging="false"
+        v-for="(item, index) in iconItem"
+        :key="index"
+        :icon="
+          typeof item.icon != 'undefined' && item.icon != '' ? item.icon : ''
+        "
+        :position="item.position"
+        :dragging="item.dragging"
+        animation="BMAP_ANIMATION_DROP"
         :zoom="zoom"
-        @click="infoWindowOpen('1')"
+        @click="infoWindowOpen(index)"
       >
         <bm-label
-          content="我在这里下定标"
-          :labelStyle="{ color: 'red', fontSize: '12px' }"
+          :content="item.content"
+          :title="item.title"
+          :labelStyle="item.labelStyle"
           :offset="{ width: -35, height: 30 }"
         />
-        <bm-info-window
-          :show="icon.show"
-          @close="infoWindowClose('1')"
-          >我在这里哦</bm-info-window
-        >
+        <!-- <template v-if="typeof item.icon != 'undefined' && item.icon == ''"> -->
+          <bm-info-window
+           :position="item.position"
+            :show="item.show"
+            @close="infoWindowClose(index)"
+            @open="infoWindowOpen(index)"
+            >{{ item.winInfo }}
+          </bm-info-window>
+        <!-- </template> -->
       </bm-marker>
-      <!-- <bm-marker 
-        class="d1"
-        :position="labelPosition" 
-        :zoom="zoom"
-        dragging
-        :zIndex="99999999"
-        :gridSize="fontMarker"
-        :title="'我家在这里哦！'"
-        :labelStyle="{ color: 'red', fontSize: '12px',width: '35px', height: '35px' }"
-        :icon="{url: img, size:{width: 30, height: 30, fontSize: '10px', color: 'red'}}"
-        >
-        </bm-marker> -->
 
-        <!-- 自定义覆盖物 -->
-         <my-overlay
-            :position="{lng: 104.08, lat: 30.67994285}"
-            text="点击我"
-            :active="active"
-            @mouseover.native="active = true"
-            @mouseleave.native="active = false">
-          </my-overlay>
-
-
+      <!-- 自定义覆盖物 -->
+      <my-overlay
+        :position="{ lng: 104.08, lat: 30.67994285 }"
+        text="点击我"
+        :active="active"
+        @mouseover.native="active = true"
+        @mouseleave.native="active = false"
+      >
+      </my-overlay>
     </baidu-map>
   </div>
 </template>
 
 <script>
-import MyOverlay from '@/components/MyOverlay'
+import MyOverlay from "@/components/MyOverlay";
 export default {
   components: {
-    MyOverlay
+    MyOverlay,
   },
   data() {
     return {
@@ -173,11 +170,38 @@ export default {
         lat: 0,
       },
       //标记文字
-     icon: {
-      show: true
-     },
-      img: require('../../icon/jinggao.png'),
-      active: false
+      icon: {
+        show: true,
+      },
+      //图标
+      iconItem: [
+        {
+          position: {
+            lng: 104.071451,
+            lat: 30.59031,
+          },
+          icon: {
+            url:
+              "http://192.168.0.201:8855//uploadFiles/202006/20200609142043316.png",
+            size: { width: 30, height: 30 },
+          },
+          dragging: false,
+          content: "宏伟汽修 68",
+          title: "宏伟汽修 68",
+          show: true,
+          labelStyle: {
+            background: "rgba(199, 15, 15, 0.7)",
+            color: "#ffffff",
+            textAlign: "center",
+            padding: "5px 15px",
+            position: "absolute",
+            border: "2px solid #ffffff",
+            fontsize: "15px",
+          },
+          winInfo: "宏伟汽修-超标了",
+        },
+      ],
+      active: false,
     };
   },
   mounted() {},
@@ -254,6 +278,13 @@ export default {
     },
     //点击打开标记弹框
     infoWindowOpen() {
+      this.$message({
+        message: '点击了'
+      })
+      console.log("点击了");
+      for(let i=0; i< this.iconItem.length; i++) {
+        this.iconItem[i].show = true
+      }
       this.icon.show = true;
     },
   },
@@ -288,10 +319,4 @@ export default {
 .fontMarker {
   font-size: 12px;
 }
-
-/* /deep/ .BMap_Marker img {
-  width: 30px;
-  height: 50px;
-} */
-
 </style>

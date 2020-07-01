@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>css Grid</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        .wrapper div{
+            padding: 1rem;
+            background: #eeeeee;
+            border: 1px solid #000000;
+        }
+        .wrapper > div:nth-child(odd) {
+            background: #cccccc;
+        }
+        .wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            /* grid-gap 被更改为 gap */
+            gap: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque sed excepturi obcaecati officiis id, voluptate illum nobis numquam nisi ad rerum blanditiis beatae quam sunt totam vel a iure odio. Optio porro provident repellat corrupti, iusto quaerat sunt possimus, ab maxime eaque fuga aliquam, quis a fugit nostrum totam aspernatur!</div>
+        <div>Lorem ipsum dolor sit i.</div>
+        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quis corporis quia veniam illum eius ullam tempora dolores voluptatem ab nulla error corrupti harum cumque laudantium, dolor vero ratione quidem quisquam culpa repellendus ipsam. Fuga numquam ex officia eaque excepturi.</div>
+        <div>Lorem ipsum  </div>
+        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quis corporis quia veniam illum eius ullam tempora dolores voluptatem ab nulla error corrupti harum cumque laudantium, dolor vero ratione quidem quisquam culpa repellendus ipsam. Fuga numquam ex officia eaque excepturi.</div>
+    </div>
+</body>
+</html>
