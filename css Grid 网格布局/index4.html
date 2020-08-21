@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .wrapper div,
+        header,
+        section,
+        footer,
+        aside {
+            padding: 1rem;
+            border: 1px solid #eee;
+            text-align: center;
+        }
+
+        .wrapper {
+            display: grid;
+            grid-template-areas: 
+                'header header header header'
+                'section section section aside'
+                'box-1 box-2 box-3 box-4'
+                'footer footer footer footer';
+            gap: 1rem;
+        }
+
+        header {
+            grid-area: header;
+        }
+
+        section {
+            grid-area: section;
+        }
+
+        aside {
+            grid-area: aside;
+        }
+
+        .box-1 {
+            grid-area: box-1;
+        }
+
+        .box-2 {
+            grid-area: box-2;
+        }
+
+        .box-3 {
+            grid-area: box-3;
+        }
+
+        footer {
+            grid-area: footer;
+        }
+
+        @media screen and (max-width: 500px){
+            .wrapper {
+            grid-template-areas: 
+                'header'
+                'section'
+                'aside'
+                'box-1'
+                'box-2'
+                'box-3'
+                'box-4'
+                'footer';
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>我是头部</header>
+        <section>我是简介</section>
+        <aside>我是侧边栏</aside>
+        <div class="box-1">.box-1</div>
+        <div class="box-2">.box-2</div>
+        <div class="box-3">.box-3</div>
+        <div class="box-4">.box-4</div>
+        <footer>我是尾部</footer>
+    </div>
+</body>
+
+</html>
