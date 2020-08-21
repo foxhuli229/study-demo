@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动画</title>
+    <fa4-$></fa4-$>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        main {
+            width: 200px;
+            height: 200px;
+            background: #d63031;
+            opacity: .8;
+            transform: rotate(45deg) scale(.5);
+            /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+            animation-name: Fn;
+            animation-duration: 2s;
+            animation-iteration-count: infinite;
+        }
+
+        main::after {
+            content: "";
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background-color: #d63031;
+            border-radius: 50%;
+            /* 移动 */
+            transform: translateX(-100px);
+        }
+
+        main::before {
+            content: "";
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background-color: #d63031;
+            border-radius: 50%;
+            transform: translateY(-100px);
+        }
+
+        @keyframes Fn {
+
+            to {
+                opacity: .8;
+                transform: rotate(45deg) scale(.5);
+            }
+
+            30% {
+                opacity: 1;
+                transform: rotate(45deg) scale(1);
+            }
+
+            65% {
+                opacity: .8;
+                transform: rotate(45deg) scale(.5);
+            }
+
+            100% {
+                opacity: 1;
+                transform: rotate(45deg) scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+    </main>
+</body>
+
+</html>

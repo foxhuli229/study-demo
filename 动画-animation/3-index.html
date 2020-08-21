@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动画</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+            background: #6c5ce7;
+        }
+
+        main {
+            width: 400px;
+            height: 400px;
+            border: 1px solid white;
+        }
+
+        div {
+            width: 100px;
+            height: 100px;
+            background: white;
+            /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+            /* 多个动画一起时候，则必须单独写，否则只能默认为最好一个动画效果 */
+            /**
+                多个动画的优先级，从后到前（从右到左）
+            */
+            animation-name: translate, backgroundColor, borderRauids;
+            /* animation-duration: 5s, 1s;
+                若 动画时间与动画个数不一致的时候，则：
+                translate： 动画时间为 5s，
+                backgroundColor, borderRauids：动画时间均为 1s
+             */
+            animation-duration: 2s, 3s;
+            /* 动画执行的循环次数，默认为1 
+                infinite：无限次
+            */
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes translate {
+            25% {
+                transform: translateX(300px);
+            }
+
+            50% {
+                transform: translate(300px, 300px);
+            }
+
+            75% {
+                transform: translateY(300px);
+            }
+        }
+
+        @keyframes backgroundColor {
+            25% {
+                background-color: #81ecec;
+            }
+
+            50% {
+                background-color: rgba(253, 121, 168, 1.0);
+            }
+
+            75% {
+                background-color: #00b894;
+            }
+        }
+
+        @keyframes borderRauids {
+            25% {
+                border-radius: 50%;
+            }
+
+            50% {
+                border-radius: 0;
+            }
+
+            75% {
+                border-radius: 50%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div></div>
+    </main>
+</body>
+
+</html>

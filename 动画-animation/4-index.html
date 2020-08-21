@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动画</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            background: rgba(178, 190, 195,1.0);
+        }
+
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+            background: #6c5ce7;
+            /* 缩放 */
+            transform: scale(0);
+            /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+            animation-name: scaleFn, backgroundColor;
+            animation-duration: 4s;
+            /* 停止到最后一帧（动画）上， */
+            animation-fill-mode: forwards;
+        }
+
+        main::after {
+            content: 'animation动画';
+            font-size: 2rem;
+            color: #ffffff;
+            opacity: 0;
+            /* 绑定动画 */
+            animation-name: fontFn;
+            /* 动画执行时间 */
+            animation-duration: 2s;
+            /* 延迟 */
+            animation-delay: 4s;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes fontFn {
+            /* from:开始， to:结束 */
+            to {
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes scaleFn {
+            25% {
+                transform: scale(0.5);
+            }
+
+            50% {
+                transform: scale(0.8) rotate(360deg);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes backgroundColor {
+            25% {
+                background-color: #81ecec;
+            }
+
+            50% {
+                background-color: rgba(253, 121, 168, 1.0);
+            }
+
+            75% {
+                background-color: #00b894;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+    </main>
+</body>
+
+</html>

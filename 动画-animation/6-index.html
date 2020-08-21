@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动画</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        ul {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        li {
+            list-style: none;
+            flex: 1;
+        }
+
+        .heart {
+            width: 100px;
+            height: 100px;
+            background: #d63031;
+            opacity: .8;
+            transform: rotate(45deg) scale(.5);
+            /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+            animation-name: Fn;
+            animation-duration: 2s;
+            animation-iteration-count: infinite;
+        }
+
+        .heart::after {
+            content: "";
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: #d63031;
+            border-radius: 50%;
+            /* 移动 */
+            transform: translateX(-50px);
+        }
+
+        .heart::before {
+            content: "";
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: #d63031;
+            border-radius: 50%;
+            transform: translateY(-50px);
+        }
+
+        ul>li:first-child .heart {
+            /*
+                mdn:https://developer.mozilla.org/zh-CN/docs/Web/CSS/animation-direction
+                normal
+                每个循环内动画向前循环，换言之，每个动画循环结束，动画重置到起点重新开始，这是默认属性。
+            */
+            animation-direction: normal;
+        }
+
+        ul>li:nth-child(2) .heart {
+            /* animation-direction CSS 属性指示动画是否反向播放 */
+            /*
+                reverse
+反向运行动画，每周期结束动画由尾到头运行
+            */
+            animation-direction: reverse;
+        }
+
+        ul>li:nth-child(3) .heart {
+            /* animation-direction CSS 属性指示动画是否反向播放 */
+            /*
+                反向交替， 反向开始交替
+动画第一次运行时是反向的，然后下一次是正向，后面依次循环。决定奇数次或偶数次的计数从1开始。
+            */
+            animation-direction: alternate-reverse;
+        }
+
+          ul>li:nth-child(4) .heart {
+            /* animation-direction CSS 属性指示动画是否反向播放 */
+            /*
+                反向交替， 反向开始交替
+动画第一次运行时是反向的，然后下一次是正向，后面依次循环。决定奇数次或偶数次的计数从1开始。
+            */
+            animation-direction: alternate;
+        }
+
+        @keyframes Fn {
+
+            to {
+                opacity: .8;
+                transform: rotate(45deg) scale(.5);
+            }
+
+            30% {
+                opacity: 1;
+                transform: rotate(45deg) scale(1);
+            }
+
+            65% {
+                opacity: .8;
+                transform: rotate(45deg) scale(.5);
+            }
+
+            100% {
+                opacity: 1;
+                transform: rotate(45deg) scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <ul>
+        <li>
+            <div class="heart"></div>
+            <span>normal</span>
+        </li>
+        <li>
+            <div class="heart"></div>
+            <span>reverse</span>
+        </li>
+        <li>
+            <div class="heart"></div>
+            <span>alternate-reverse</span>
+        </li>
+        <li>
+            <div class="heart"></div>
+            <span>alternate</span>
+        </li>
+    </ul>
+</body>
+
+</html>

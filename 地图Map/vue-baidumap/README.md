@@ -1,24 +1,8 @@
-# vue-baidumap
+# 百度地图
+ 
+需要安装的依赖:
 
-## Project setup
+``` bash
+yarn add vue-baidu-map
+yarn add bmaplib.new-distancetool
 ```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

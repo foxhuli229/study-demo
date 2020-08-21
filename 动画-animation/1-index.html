@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动画</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+            background: #6c5ce7;
+        }
+
+        div {
+            width: 100px;
+            height: 100px;
+            background: white;
+            /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+            animation: dn 2s;
+        }
+
+        @keyframes dn {
+            0% {
+                /* 放大、缩放 */
+                transform: scale(1); 
+                background: #55efc4;
+            }
+            
+            45% {
+                transform: scale(1.2);
+                background: #fab1a0;
+            }
+
+            75% {
+                transform: scale(1);
+                background: #ff7675;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+</body>
+
+</html>

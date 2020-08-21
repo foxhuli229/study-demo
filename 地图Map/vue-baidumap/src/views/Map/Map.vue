@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-05-26 10:03:35
- * @LastEditTime: 2020-05-26 17:06:34
+ * @LastEditTime: 2020-05-27 15:28:16
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vue-baidumap\src\views\Map.vue
@@ -70,9 +70,8 @@
       <!-- 自定义按钮 -->
       <bm-control class="bmContrClass" anchor="BMAP_ANCHOR_TOP_RIGHT">
         <button @click="addZoom(19)">缩放至最大</button>
-        <button @click="addZoom(10)">还原</button>
-        <button @click="addZoom(3)">缩放至最小</button>
-
+        <button @click="addZoom(12)">还原</button>
+        <button @click="addZoom(4)">缩放至最小</button>
       </bm-control>
     </baidu-map>
   </div>
@@ -89,7 +88,7 @@ export default {
         lat: 0,
       },
       //缩放比例
-      zoom: 3,
+      zoom: 12,
       //自定义样式
       // :mapStyle="mapStyle"
       mapStyle: {
@@ -114,15 +113,20 @@ export default {
     };
   },
   methods: {
-    handler({ BMap, map }) {
-      console.log(BMap, map);
-      this.center.lng = 104.072745;
-      this.center.lat = 30.578994;
-      this.zoom = 12;
-    },
-    syncCenterAndZoom(e) {
-      // console.log(e);
 
+    //初始化后，立即发送定位申请
+    handler({ BMap }) {
+      let this_ = this;
+      let geolocation = new BMap.Geolocation();
+      geolocation.getCurrentPosition(
+        function(r) {
+          this_.center = { lng: r.longitude, lat: r.latitude }; // 设置center属性值
+          alert("加载完成")
+        },{enableHighAccuracy: true})
+    },
+
+    //值双向绑定
+    syncCenterAndZoom(e) {
       const { lng, lat } = e.target.getCenter();
       this.center.lng = lng;
       this.center.lat = lat;
@@ -130,9 +134,11 @@ export default {
     },
 
     //定位成功
-    locationSuccess(point) {
+    locationSuccess({ point }) {
       console.log("定位成功！");
       console.log(point);
+      this.center.lng = point.lng;
+      this.center.lat = point.lat;
     },
 
     //定位失败
@@ -157,8 +163,6 @@ export default {
       this.zoom = level;
       console.log(this.zoom);
     },
-
-   
   },
 };
 </script>
