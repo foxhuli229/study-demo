@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生命周期钩子如何实现</title>
+</head>
+
+<body>
+    <script>
+        function mergeHook(parentVal, childrenVal) {
+            if (childrenVal) {
+                if (parentVal) {
+                    return parentVal.concat(childrenVal)
+                } else {
+                    //将钩子函数包装成 数组
+                    return [childrenVal]
+                }
+            } else {
+                return parentVal
+            }
+        }
+
+        function mergeOptions(parent, children) {
+            let opts = {}
+
+            //合并钩子方法
+            for (let key in children) {
+                opts[key] = mergeHook(parent[key], children[key])
+            }
+
+            return opts;
+        }
+
+        function callHook(vm, hookName) {
+            vm.options[hookName] && vm.options[hookName].forEach(h => h())
+        }
+
+        //合并操作
+        function Vue(options) {
+            //内部会将钩子函数，转换成一个 数组   this.constructor.options == {}
+            this.options = mergeOptions(this.constructor.options, options);
+
+            callHook(this, "beforeCreate")
+            callHook(this, "created")
+        }
+
+        //全局组件 全局过滤器
+        Vue.options = {}; //默认的, 父
+
+        // mixin 可以提供全局数据，但是 数据不是共享
+        Vue.mixin = function (obj) {
+
+            //把Vue.options 中的beforeCreate 变成数组
+            // this.options[beforeCreate] = [fn]
+
+            //内部会将钩子函数，转换成一个 数组   this.constructor.options == {}
+            this.options = mergeOptions(this.options, obj);
+            console.log(this.options);
+        }
+
+        Vue.mixin({
+            beforeCreate() {
+                console.log("before create ok  mixin");
+            },
+        })
+
+        new Vue({
+            beforeCreate() {
+                console.log("before create ok  Vue");
+            },
+            created() {
+                console.log("created")
+            },
+        })
+    </script>
+</body>
+
+</html>

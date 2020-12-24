@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>解构赋值</title>
+</head>
+<body>
+    <script>
+        const F4 = ['小', 'liu', 'zhao', 'song']
+        let [xiao, liu, zhao1, song ] = F4
+        console.log('====================================');
+        console.log(xiao, liu, zhao1, song);
+        console.log('====================================');
+
+        const zhao = {
+            name: '赵本山',
+            age: '不小知道',
+            xiaopin: function() {
+                console.log("我可以演小品");
+            }
+        }
+
+        let {name, age, xiaopin} = zhao
+        console.log(name, age, xiaopin);
+        xiaopin()
+
+    </script>
+</body>
+</html>

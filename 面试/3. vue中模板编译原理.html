@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3. vue中模板编译原理</title>
+</head>
+
+<body>
+    <!-- 依赖的模板来自：vue-template-compiler -->
+    <!-- <script src="node_modules/vue-template-compiler/browser.js"></script> -->
+    <script src="browser.js"></script>
+
+    <script>
+        let {
+            ast,
+            render
+        } = VueTemplateCompiler.compile(`<div>zf</div>`);
+        console.log(ast, render);
+
+        //模板实现原理 with + new Function
+        let states = new Function(render)
+        console.log(states);
+
+        //render方法执行完毕后生成的是 虚拟dom
+        // with(this){return _c('div',[_v("zf")])}
+    </script>
+
+</body>
+
+</html>

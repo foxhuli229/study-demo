@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="app"></div>
+    <script>
+        let active = null;
+
+        //变成响应式数据
+        let state = {
+            count: 0
+        };
+
+
+        function defineReactive(obj) {
+            for (let key in obj) {
+                let value = obj[key]; //对象对应的值
+                let dep = []
+                Object.defineProperty(obj, key, {
+                    get() {
+                        if (active) {
+                            dep.push(active); //依赖手机
+                        }
+                        return value
+                    },
+                    set(newValue) { //触发更新
+                        value = newValue
+                        dep.forEach(watcher =>
+                            watcher()
+                        );
+                    }
+                })
+            }
+        }
+
+        defineReactive(state)
+
+
+        //插入到页面的功能，需要保存起来
+
+        const watcher = (fn) => {
+            active = fn
+            fn();
+            active = null;
+        }
+
+
+        watcher(() => {
+            app.innerHTML = state.count;
+        })
+
+        watcher(() => {
+            console.log(state.count);
+        })
+    </script>
+
+</body>
+
+</html>

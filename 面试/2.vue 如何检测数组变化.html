@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue 如何检测数组变化</title>
+</head>
+
+<body>
+
+    <div id="app"></div>
+
+    <script>
+        let state = [1, 2, 3]; //1，变成响应式数据
+
+        let originalArry = Array.prototype; //数组原来的方法
+
+        //不是深拷贝
+        let arrayMethods = Object.create(originalArry)
+
+        function defineReactive(obj) {
+            //函数劫持
+            arrayMethods.push = function (...args) {
+                originalArry.push.call(this, ...args)
+                render();
+            }
+            console.log(arrayMethods);
+            console.log(arrayMethods);
+
+            obj._proto_ = arrayMethods //不行可以循环赋值，JS中原型
+        }
+        defineReactive(state)
+
+        //插入到页面的功能，需要保存起来
+        function render() {
+            console.log(state);
+            app.innerHTML = state
+        }
+
+        render();
+
+        setTimeout(() => {
+            state.push(4)
+        }, 1000)
+    </script>
+
+</body>
+
+</html>
