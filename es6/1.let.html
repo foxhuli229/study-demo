@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .item {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            margin-right: 1rem;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    
+    <div class="item"></div>
+    <div class="item"></div>
+    <div class="item"></div>
+
+    <script>
+        const itemList = document.getElementsByClassName("item")
+        for(let i=0; i<itemList.length; i++) {
+            itemList[i].onclick = function() {
+                console.log('====================================');
+                console.log(itemList[i]);
+                console.log('====================================');
+                itemList[i].style.background = '#189'
+            }
+        }
+    </script>
+</body>
+
+
+</html>
