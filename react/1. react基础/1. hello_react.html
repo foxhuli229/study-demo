@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>react 基础</title>
+    <script src=""></script>
+</head>
+<body>
+
+    <div id="test"></div>
+
+    <!-- 引入react核心库-->
+    <script type="text/javascript" src="./js/react.development.js"></script>
+    <!-- 引入react-dom,用于支持react操作dom-->
+    <script type="text/javascript" src="./js/react-dom.development.js"></script>
+    <!-- 引入babale，用于jsx转js -->
+    <script type="text/javascript" src="./js/babel.min.js"></script>
+
+    <!-- 此处必须要写bable -->
+    <script type="text/babel">
+        //1. 创建虚拟dom
+        // 此处一定不能写 引号，因为不是字符串
+        const VDOM = <h1>Hello, react</h1>
+        //2. 渲染虚拟dom到页面
+        ReactDom.render(VDOM, test)
+
+    </script>
+
+</body>
+</html>
