@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>1. 类的基本知识</title>
+</head>
+<body>
+
+
+    <script type="text/javascript">
+        /**
+         * 总结：
+         * 1.类中构造器不是必须写的，要对实例进行一些初始化的操作，如添加指定属性的情况下才写。
+         * 2.如果B类继承了A类，而且B类中写了构造器，那么B类构造器中的super是必须要调用的
+         */
+        class Pserson {
+            constructor(name, age) {
+                //构造器中的this，是实例对象
+                this.name = name;
+                this.age = age
+            }
+            //一般方法,该方法放在了 - 类的原型对象上，供实例使用
+            speak() {
+                console.log(`我叫${this.name}, 我的年龄是${this.age}`)
+            }
+        }
+
+        //类，继承person类
+        class Student extends Pserson{
+            constructor(name, age, grade) {
+                //必须在最前面
+                super(name, age);
+                this.grade =grade;
+            }
+
+            speak() {
+                console.log(`我叫${this.name}, 我的年龄是${this.age}，我读的是${this.grade}年级`)
+            }
+
+            study() {
+
+            }
+        }
+
+        // const p1= new Pserson("tom", 18);
+        // const p2= new Pserson("jerry", 19);
+        // console.log(p1)
+        // console.log(p2)
+
+        const s1 = new Student("阿黄", 23, "高一");
+        console.log(s1)
+        console.log(s1.speak())
+    </script>
+
+</body>
+</html>

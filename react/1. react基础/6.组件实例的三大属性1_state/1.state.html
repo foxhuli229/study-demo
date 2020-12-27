@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="test"></div>
+
+<!-- 引入react核心库-->
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<!-- 引入react-dom,用于支持react操作dom-->
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<!-- 引入babale，用于jsx转js -->
+<script type="text/javascript" src="../js/babel.min.js"></script>
+
+<script type="text/babel">
+    /**
+     * 1. 组件必须继承 React.Component
+     * 2. 必须需要 render()
+     * 总结:
+     *  1. 在react中所有的函数，都被重名了，例如: onclick => onClick, onblur => onBlur
+     *  2. 在react中调用函数时，需要使用 {}，例如：h1 onClick={this.changeWeather}>今天很{this.state.ishot ? "炎热" : "凉爽"}</h1>
+     *  3. 在react调用函数中，绑定的函数，不需要加上 ()，否则是立即调用，例如  onClick={this.changeWeather()},则是立即调用，页面渲染的时候，则就会被调用
+     */
+        //1. 创建类式组件
+    class Weather extends React.Component{
+        // 构造器只调用 - 1次
+        constructor(props) {
+            super(props);
+            this.state = {ishot: true, wind: "大风"}
+            //此行重要，解决 changeWeather 的this指向问题
+            this.changeWeather1 = this.changeWeather.bind(this);
+        }
+        // render调用 - 1+n次
+        render() {
+            //redner放在 - 类的原型对象上，仅实例使用
+            //redner中的this是谁？ - DomCompents 的实例对象，React.Component组件实例对象
+            console.log(this)
+            return <h1 onClick={this.changeWeather1}>今天很{this.state.ishot ? "炎热" : "凉爽"}</h1>
+        }
+        // render调用 - 点几次调用几次
+        changeWeather() {
+            //state状态不可以直接更改，必须使用setState更改，页面才会更新
+            this.setState({
+                ishot: !this.state.ishot
+            })
+            console.log("此处修改的ishot的值", this)
+        }
+
+
+    }
+
+    //2.渲染组件到页面
+    ReactDOM.render(<Weather/>, document.getElementById("test"))
+
+    // function  changeWeather() {
+    //
+    //     console.log("此处修改的ishot的值")
+    // }
+    /**
+     * 执行了  ReactDOM.render(<DomCompents/>, document.getElementById("test"))之后，发生了？
+     * 1.react解析组件标签，找到了 DomCompents 组件
+     * 2.发现组件是类定义的，随后new出该类的实例，并通过实例调用到原型上render方法
+     * 3.将render返回的虚拟dom转为真实dom，随后在页面上呈现出来
+     * */
+</script>
+
+</body>
+</html>

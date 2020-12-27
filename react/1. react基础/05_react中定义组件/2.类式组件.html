@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div id="test"></div>
+
+    <!-- 引入react核心库-->
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <!-- 引入react-dom,用于支持react操作dom-->
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <!-- 引入babale，用于jsx转js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+
+    <script type="text/babel">
+        /**
+         * 1. 组件必须继承 React.Component
+         * 2. 必须需要 render()
+         */
+        //1. 创建类式组件
+        class DomCompents extends React.Component{
+            render() {
+                //redner放在 - 类的原型对象上，仅实例使用
+                //redner中的this是谁？ - DomCompents 的实例对象，React.Component组件实例对象
+                console.log("redner中的this", this)
+                return <h1>我是类定义的组件（使用于【复用组件】）的定义</h1>
+            }
+        }
+
+        //2.渲染组件到页面
+        ReactDOM.render(<DomCompents/>, document.getElementById("test"))
+        /**
+         * 执行了  ReactDOM.render(<DomCompents/>, document.getElementById("test"))之后，发生了？
+         * 1.react解析组件标签，找到了 DomCompents 组件
+         * 2.发现组件是类定义的，随后new出该类的实例，并通过实例调用到原型上render方法
+         * 3.将render返回的虚拟dom转为真实dom，随后在页面上呈现出来
+         * */
+    </script>
+
+</body>
+</html>
