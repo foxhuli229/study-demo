@@ -61,3 +61,7 @@ js 的压缩插件： [uglifyjs-webpack-plugin](https://webpack.js.org/plugins/u
 定义环境变量的 [DefinePlugin](https://webpack.js.org/plugins/define-plugin/)
 
 生成 CSS 文件的 [ExtractTextWebpackPlugin](https://webpack.js.org/plugins/extract-text-webpack-plugin/) 
+
+## 2. webpack学习总结
+> 参考文档: https://www.bilibili.com/video/BV1e7411j7T5?p=3
+

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+            transform: rotate(0);
+            /* background-color: #636e72; */
+            /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+            animation-name: background, scale;
+            animation-duration: 2s, 4s;
+            animation-fill-mode: forwards;
+            /* 动画执行次数，默认1次 */
+            animation-iteration-count: 2;
+        }
+
+        main::after {
+            content: "动画学习";
+            font-size: 2em;
+            color: #fff;
+            opacity: 0;
+            animation-name: opacity;
+            /* 延迟执行时间 */
+            animation-delay: 4s; 
+            /* 动画执行时间 */
+            animation-duration: 2s;
+            /* 动画执行后，是否停留到最后一个帧 */
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes opacity {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes scale {
+            25% {
+                transform: scale(0.5);
+            }
+
+            50% {
+                transform: scale(1) rotate(360deg);
+            }
+
+            75% {
+                transform: scale(0.5);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes background {
+            25% {
+                background-color: #00cec9;
+            }
+
+            50% {
+                background-color: #fab1a0;
+            }
+
+            75% {
+                background-color: yellow;
+            }
+
+            100% {
+                background-color: #d63031;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main></main>
+</body>
+
+</html>

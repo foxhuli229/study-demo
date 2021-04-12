@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>props基本使用</title>
+</head>
+<body>
+
+<div id="test"></div>
+
+<!-- 引入react核心库-->
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<!-- 引入react-dom,用于支持react操作dom-->
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<!-- 引入babale，用于jsx转js -->
+<script type="text/javascript" src="../js/babel.min.js"></script>
+
+<script type="text/babel">
+    /**
+     * 1. 组件必须继承 React.Component
+     * 2. 必须需要 render()
+     * 总结:
+     *  1. 在react中所有的函数，都被重名了，例如: onclick => onClick, onblur => onBlur
+     *  2. 在react中调用函数时，需要使用 {}，例如：h1 onClick={this.changeWeather}>今天很{this.state.ishot ? "炎热" : "凉爽"}</h1>
+     *  3. 在react调用函数中，绑定的函数，不需要加上 ()，否则是立即调用，例如  onClick={this.changeWeather()},则是立即调用，页面渲染的时候，则就会被调用
+     */
+        //1. 创建类式组件
+    class Person extends React.Component{
+        // render调用 - 1+n次
+        render() {
+            const  {name, sex, age} = this.props;
+            return (
+                <ul>
+                    <li>姓名：{name}</li>
+                    <li>性别：{sex}</li>
+                    <li>年龄： {age}</li>
+                </ul>
+            )
+        }
+
+        //对props参数进行限制
+        propTypes = {
+            name: PropTypes.string.isRequired,
+            sex: PropTypes.string,
+            age: PropTypes.number,
+            speak: PropTypes.func
+        }
+
+        //设置默认值
+        defaultProps = {
+            sex: "男",
+            age: 12
+        }
+
+        speak = () => {
+            console.log("我说话了")
+        }
+    }
+
+    //2.渲染组件到页面
+    ReactDOM.render(<Person name="tom" sex="女" age="18" onclick={this.speak}/>, document.getElementById("test"))
+
+</script>
+
+</body>
+</html>

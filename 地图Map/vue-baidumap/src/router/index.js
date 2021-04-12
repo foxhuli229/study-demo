@@ -1,8 +1,3 @@
-/*
- * @Author: your name
- * @Date: 2020-05-26 10:01:47
-
- */ 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
